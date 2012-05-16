@@ -1,0 +1,217 @@
+﻿/*building title*/
+.buildingtitle
+{
+    position: absolute;
+    height: 20px;
+    width: 70px;
+    background-image: url(img/bg/bg_tip3.png);
+    line-height: 20px;
+    text-align: center;
+    /**/
+    color: yellow;
+    text-decoration: none;
+    font-family: arial, verdana, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    display: block;
+}
+.buildingtitle a
+{
+    color: yellow;
+    text-decoration: none;
+    font-family: arial, verdana, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    display: block;
+}
+
+.bigbutton
+{
+    background-image: url(img/button/red_big.png);
+    height: 32px;
+    width: 145px;
+    text-align: center;
+		color: #FFFC17;
+    text-decoration: none;
+    font-family: arial, verdana, sans-serif;
+    font-size: 20px;
+    line-height: 32px;
+    font-weight: bold;
+}
+.bigbutton b
+{
+    color: #FFFC17;
+    font-size: 16px;
+}
+
+/*funcbutton*/
+.funcbutton
+{
+	position: absolute;
+    height: 28px;
+    width: 66px;
+    list-style: none;
+    background-image: url(img/button/redbar.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    line-height: 28px;
+    text-align: center;
+    color: #FFFC17;
+    text-decoration: none;
+    font-family: arial, verdana, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    display: block;
+	cursor:pointer;
+}
+.funcbutton a
+{
+    color: #FFFC17;
+    text-decoration: none;
+    font-family: arial, verdana, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    display: block;
+}
+.leftbutton
+{
+    position: absolute;
+    height: 35px;
+    width: 35px;
+    background-image: url(img/button/arrow_l.png);
+}
+.leftbutton a
+{
+    display: block;
+    height: 35px;
+    width: 35px;
+}
+.rightbutton
+{
+    position: absolute;
+    height: 35px;
+    width: 35px;
+    background-image: url(img/button/arrow_r.png);
+}
+.rightbutton a
+{
+    display: block;
+    height: 35px;
+    width: 35px;
+}
+.upbutton
+{
+    position: absolute;
+    height: 35px;
+    width: 35px;
+    background-image: url(img/button/arrow_u.png);
+}
+.upbutton a
+{
+    display: block;
+    height: 35px;
+    width: 35px;
+}
+.downbutton
+{
+    position: absolute;
+    height: 35px;
+    width: 35px;
+    background-image: url(img/button/arrow_d.png);
+}
+.downbutton a
+{
+    display: block;
+    height: 35px;
+    width: 35px;
+}
+.homebutton
+{
+		position: absolute;
+    height: 30px;
+    width: 30px;
+    background-image: url(img/button/home.gif);
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+.homebutton a
+{
+    display: block;
+    height: 19px;
+    width: 22px;
+}
+.sleftbutton
+{
+		position: absolute;
+    height: 29px;
+    width: 29px;
+    background-image: url(img/button/icon-arrow-left.gif);
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+.sleftbutton a
+{
+    display: block;
+    height: 29px;
+    width: 29px;
+}
+.srightbutton
+{
+		position: absolute;
+    height: 29px;
+    width: 29px;
+    background-image: url(img/button/icon-arrow-right.gif);
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+.srightbutton a
+{
+    display: block;
+    height: 29px;
+    width: 29px;
+}
+.minusbutton
+{
+		position: absolute;
+    height: 30px;
+    width: 50px;
+    background-image: url(img/button/minus.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+.plusbutton
+{
+		position: absolute;
+    height: 30px;
+    width: 50px;
+    background-image: url(img/button/plus.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+.maxbutton
+{
+		position: absolute;
+    height: 30px;
+    width: 36px;
+    background-image: url(img/button/max.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+.promotebutton
+{
+	height: 30px;
+  width: 30px;
+  background-image: url(img/button/promote.png);
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+.moreinfobutton
+{
+	height: 30px;
+  width: 30px;
+  background-image: url(img/button/moreinfo.png);
+  background-repeat: no-repeat;
+  background-position: center center;
+}

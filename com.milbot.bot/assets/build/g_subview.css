@@ -1,0 +1,354 @@
+#wrapper
+{
+    position: relative;
+    z-index: 1;
+    /* height: 250px; Desired element height */
+}
+
+.tab_text {
+	position: absolute;
+	height: 29px;
+	color: #FFFFFF;
+	line-height: 29px;
+    font-family: arial, verdana, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+}
+
+.tab_text b {
+	color: #FFFC17;
+}
+
+.tab_active
+{
+    position: absolute;
+    height: 29px;
+    width: 72px;
+    background-image: url(img/bg/b.png);
+    line-height: 29px;
+    text-align: center;
+	cursor: pointer;
+	
+	color: #FFFC17;
+    text-decoration: none;
+    font-family: arial, verdana, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    display: block;
+}
+.tab_inactive
+{
+    position: absolute;
+    height: 29px;
+    width: 72px;
+    line-height: 29px;
+    text-align: center;
+    color: #FFFFFF;
+    text-decoration: none;
+    font-family: arial, verdana, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+	cursor: pointer;
+}
+
+.tab_active2
+{
+    height: 22px;
+    width: 71px;
+    background-image: url(img/button/tab_a.png);
+    line-height: 22px;
+    text-align: center;
+    color: #FFFC17;
+    text-decoration: none;
+    font-family: arial, verdana, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    display: block;
+}
+.tab_inactive2
+{
+    height: 22px;
+    width: 71px;
+    background-image: url(img/button/tab_b.png);
+    line-height: 22px;
+    color: #FFFC17;
+    text-decoration: none;
+    font-family: arial, verdana, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    display: block;
+}
+.whitespace
+{
+    position: absolute;
+    height: 29px;
+    width: 1px;
+    background: #FFFFFF;
+}
+.closeform
+{
+    position: absolute;
+    height: 21px;
+    width: 21px;
+    background-image: url(img/button/btClose.png);
+    line-height: 21px;
+    text-align: center;
+}
+.closeform a
+{
+    display: block;
+    height: 22px;
+    width: 21px;
+}
+.backbutton
+{
+    position: absolute;
+    height: 40px;
+    width: 50px;
+    background-image: url(img/button/back_button.png);
+    background-repeat: no-repeat;
+    background-position: top left;
+    z-index:9;
+}
+.menubg
+{
+    position: absolute;
+    z-index: 10;
+    border: 0px;
+    background-image: url(img/frame/transparent.png);
+    background-repeat: repeat;
+    padding: 0px;
+    margin: 0;
+    color: #FFFFFF;
+    text-decoration: none;
+    font-family: arial, verdana, sans-serif;
+    font-size: 14px;
+}
+.menubg b
+{
+    color: #FFFC17;
+}
+.drop_down
+{
+		z-index: 1;
+    position: absolute;
+    height: 15px;
+    width: 15px;
+    background-image: url(img/button/drop_down.bmp);
+    line-height: 21px;
+    text-align: center;
+}
+.drop_down a
+{
+    display: block;
+    height: 15px;
+    width: 15px;
+}
+.drop_up
+{
+		z-index: 1;
+    position: absolute;
+    height: 15px;
+    width: 15px;
+    background-image: url(img/button/drop_up.bmp);
+    line-height: 21px;
+    text-align: center;
+}
+.drop_up a
+{
+    display: block;
+    height: 15px;
+    width: 15px;
+}
+.canvasbg
+{
+    position: absolute;
+    border: 0px;
+    background-image: url(img/frame/transparent.png);
+    background-repeat: repeat;
+    padding: 0px;
+    margin: 0;
+}
+.reshead2
+{
+    padding: 0 0 0 1px;
+    margin: 0;
+    list-style: none;
+    height: 23px;
+}
+.reshead2 li
+{
+    float: left;
+    line-height: 23px;
+}
+.reshead2 li em
+{
+    display: block;
+    float: left;
+    width: 25px;
+    height: 23px;
+
+}
+.reshead2 li b
+{
+    display: block;
+    float: left;
+    height: 23px;
+    color: #FFFFFF;
+    text-decoration: none;
+    font-family: arial, verdana, sans-serif;
+    text-align: center;
+    font-size: 11px;
+}
+/* ICON ELEMENTS */
+.reshead2 li em.food
+{
+    background-image: url(img/res/food.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+.reshead2 li em.wood
+{
+    background-image: url(img/res/wood.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+.reshead2 li em.iron
+{
+    background-image: url(img/res/iron.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+.reshead2 li em.stone
+{
+    background-image: url(img/res/stone.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+.reshead2 li em.gold
+{
+    background-image: url(img/res/ic06_other.gif);
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+.reshead2 li em.gem
+{
+    background-image: url(img/res/gem3.gif);
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+.reshead2 li em.head
+{
+    background-image: url(img/res/icon_p.gif);
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+.reshead2 li em.land
+{
+    background-image: url(img/res/castl.gif);
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+.reshead2 li em.clock
+{
+    background-image: url(img/res/clock.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+.reshead2 li em.durab
+{
+    background-image: url(img/res/castl.png);
+    background-repeat: no-repeat;
+    background-position: center bottom;
+}
+.reshead2 li em.pvp
+{
+    background-image: url(img/res/sign2.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+.iphonetitle
+{
+    height: 29px;
+    width: 480px;
+    background-image: url(img/bg/bg_tip3.png);
+}
+
+.itemicon1
+{
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    background-image: url(img/item/sample.gif);
+    background-repeat: no-repeat;
+    display: block;
+}
+
+.checking
+{
+	background-image: url(img/button/search.png);
+  background-repeat: no-repeat;
+  background-position: bottom right;
+}
+
+.recruitpanel
+{
+	position: absolute;
+    border: 0px;
+    padding: 0px;
+    margin: 0;
+    height: 210px;
+    width: 180px;
+    background-image: url(img/bg/bpanel.png);
+}
+
+.newmsg
+{
+	background-image: url(img/bg/new2.png);
+  background-repeat: no-repeat;
+  background-position: center right;
+}
+
+.qreward
+{
+    padding: 0 0 0 1px;
+    margin: 0;
+    list-style: none;
+    height: 20px;
+}
+.qreward li
+{
+    float: left;
+    line-height: 20px;
+}
+.qreward li em
+{
+    display: block;
+    float: left;
+    width: 21px;
+    height: 20px;
+		background-image: url(img/bg/gift.png);
+    background-repeat: no-repeat;
+    background-position: top right;
+}
+.qreward li b
+{
+    display: block;
+    float: left;
+    height: 20px;
+    color: #FFFFFF;
+    text-decoration: none;
+    font-family: arial, verdana, sans-serif;
+    text-align: center;
+    font-size: 12px;
+}
+
+.seperator
+{
+	background-image: url(img/bg/seperator.png);
+	background-repeat: repeat-x;
+  background-position: center center;
+}

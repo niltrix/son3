@@ -1,0 +1,402 @@
+/*header & footer*/
+.sbanner
+{
+    position: absolute;
+    left: 0px;
+    width: 480px;
+    background-image: url(img/frame/mud.jpg);
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    z-index: 10;
+}
+
+/*resource list*/
+.reshead
+{
+    padding: 0 0 0 1px;
+    margin: 0;
+    list-style: none;
+    height: 30px; /* background:#1841c8 url(reshead/nav_background.gif); */
+}
+.reshead li
+{
+    float: left;
+    line-height: 30px;
+	height:30px;
+	vertical-align:middle;
+}
+.reshead li b
+{
+    display: block;
+    float: left;
+    height: 30px;
+    color: #FFFFFF;
+    text-decoration: none;
+    font-family: arial, verdana, sans-serif;
+    text-align: center;
+    font-size: 11px;
+}
+.reshead li SELECT
+{
+    text-decoration: none;
+    font-family: arial, verdana, sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+}
+.reshead li em
+{
+    display: block;
+    float: left;
+    width: 30px;
+    height: 30px;
+}
+/* ICON ELEMENTS */
+.reshead li em.home
+{
+    background-image: url(img/button/home.gif);
+    background-repeat: no-repeat;
+    background-position: center right;
+}
+.reshead li em.race1
+{
+    background-image: url(img/res/nation3.png);
+    background-repeat: no-repeat;
+    background-position: center right;
+}
+.reshead li em.race2
+{
+    background-image: url(img/res/nation2.png);
+    background-repeat: no-repeat;
+    background-position: center right;
+}
+.reshead li em.race3
+{
+    background-image: url(img/res/nation4.png);
+    background-repeat: no-repeat;
+    background-position: center right;
+}
+.reshead li em.lv
+{
+    background-image: url(img/res/lv.png);
+    background-repeat: no-repeat;
+    background-position: center right;
+    width: 24px;
+}
+.reshead li em.gem
+{
+		width: 23px;
+    background-image: url(img/res/gem3.gif);
+    background-repeat: no-repeat;
+    background-position: center right;
+}
+.reshead li em.guild
+{
+		width: 32px;
+    background-repeat: no-repeat;
+    background-position: center right;
+}
+.reshead li em.king
+{
+    background-image: url(img/res/flag.png);
+    background-repeat: no-repeat;
+    background-position: center right;
+}
+.reshead li em.castle
+{
+    background-image: url(img/res/castl.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+.reshead li em.pvp
+{
+    background-image: url(img/res/sign2.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+/*game menu*/
+.menufoot
+{
+    padding: 0px;
+    margin: 0;
+	/* background:#1841c8 url(reshead/nav_background.gif); */
+}
+.menufoot li
+{
+	list-style-type: none;
+    float: left;
+	display: block;
+    color: yellow;
+    font-family: arial, verdana, sans-serif;
+    text-align: center;
+    padding: 0px;
+    font-size: 12px;
+}
+.menufoot li em
+{
+    display: block;
+    float: left;
+    width: 48px;
+    height: 40px;
+}
+.menufoot li em b
+{
+	position: relative;
+	width: 48px;
+  top: 26px;
+	text-align: center;
+	text-decoration: none;
+	font-style:normal;
+}
+/* ICON ELEMENTS */
+.menufoot li em.m1
+{
+    background-image: url(img/button/quest.png);
+    background-repeat: no-repeat;
+    background-position: top center;
+}
+.menufoot li em.m2
+{
+    background-image: url(img/button/item.png);
+    background-repeat: no-repeat;
+    background-position: top center;
+}
+.menufoot li em.m3
+{
+    background-image: url(img/button/trade.png);
+    background-repeat: no-repeat;
+    background-position: top center;
+}
+.menufoot li em.m4
+{
+    background-image: url(img/button/shop.png);
+    background-repeat: no-repeat;
+    background-position: top center;
+}
+.menufoot li em.m5
+{
+    background-image: url(img/button/world.png);
+    background-repeat: no-repeat;
+    background-position: top center;
+}
+.menufoot li em.m6
+{
+    background-image: url(img/button/fav.png);
+    background-repeat: no-repeat;
+    background-position: top center;
+}
+.menufoot li em.m7
+{
+    background-image: url(img/button/ally.png);
+    background-repeat: no-repeat;
+    background-position: top center;
+}
+.menufoot li em.m8
+{
+    background-image: url(img/button/chat.png);
+    background-repeat: no-repeat;
+    background-position: top center;
+}
+.menufoot li em.m9
+{
+    background-image: url(img/button/mail.png);
+    background-repeat: no-repeat;
+    background-position: top center;
+}
+.menufoot li em.m10
+{
+    background-image: url(img/button/rank.png);
+    background-repeat: no-repeat;
+    background-position: top center;
+}
+.menufoot li em.m11
+{
+    background-image: url(img/button/help.png);
+    background-repeat: no-repeat;
+    background-position: top center;
+}
+
+.hintpanel
+{
+    position: absolute;
+    width: 128px;
+    height: 61px;
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    z-index: 999;
+}
+.hintpanel p
+{
+    color: #FFFFFF;
+    font-family: arial, verdana, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    position:absolute;
+    left:2px;
+    width:124px;
+}
+.hintpanel p b
+{
+    color: #FFFC17;
+}
+.guidebg
+{
+		position: absolute;
+    left: 0px;
+    top: 0px;
+    height: 320px;
+    width: 480px;
+    background-image: url(img/frame/transparent.png);
+    background-repeat: repeat;
+    z-index: 100;
+}
+.guidepanel
+{
+    position: absolute;
+    top: 60px;
+    left: 5px;
+    width: 460px;
+    height: 188px;
+    background-repeat: no-repeat;
+    background-position: bottom left;
+}
+.guideinfopanel
+{
+    position: absolute;
+    left: 138px;
+    top: 45px;
+    height: 95px;
+    width: 322px;
+    background-image: url(img/frame/info.png);
+}
+.guideinfopanel p
+{
+    color: #FFFFFF;
+    font-family: arial, verdana, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: left;
+}
+.guideinfopanel p b
+{
+    color: #FFFC17;
+}
+        #selectproxy_panel{
+            background-image:url(img/bg/transparent.png);
+            position:absolute;
+            height:320px;
+            width:480px;
+            padding:0;
+            margin:0;
+            left:0px;
+            top:0px;
+            display:none;
+            z-index:2000;
+        }
+        #selectproxy_panel .selectproxy_panel_content{
+            width:100%;
+            height:320px;
+            padding:0;
+            margin:0;
+        }
+        #selectproxy_panel .selectproxy_panel_content .selectproxy_panel_control{
+            width:80%;
+            position:relative;
+            height:10px;
+        }
+        #selectproxy_panel .selectproxy_panel_content .selectproxy_panel_control #selectproxy_panel_cancel{
+            position:absolute;
+            top:15px;
+            right:40px;
+            display:block;
+            width:38px;
+            height:31px;
+            background-image:url(img/frame/close_ico.png);
+            background-repeat:no-repeat;
+            background-position:center center
+        }
+
+        #selectproxy_panel .selectproxy_panel_content .selectproxy_panel_innerview_top{
+            padding:0;
+            padding-top:40px;
+            background-image:url('img/frame/content_bg.png');
+            background-repeat:no-repeat;
+            background-position:center top;
+        }
+
+        #selectproxy_panel .selectproxy_panel_content .selectproxy_panel_innerview{
+            min-height:100px;
+            max-height:140px;
+            width: 100%;
+            overflow:hidden;
+            color:#fff;
+            background-image:url('img/frame/content_bg.png');
+            background-repeat:no-repeat;
+            background-position:center -30px;
+        }
+        #selectproxy_panel .selectproxy_panel_content .selectproxy_panel_innerview_bottom{
+            padding:0;
+            padding-bottom:30px;
+            background-image:url('img/frame/content_bg.png');
+            background-repeat:no-repeat;
+            background-position:center bottom;
+        }
+        #selectproxy_panel .selectproxy_panel_content .selectproxy_panel_innerview .move{
+            width:80%;
+        }
+         #selectproxy_panel .selectproxy_panel_content .selectproxy_panel_innerview .selectproxy_panel_item{
+             width:280px;
+             position:relative;
+			 height:31px;
+         }
+        #selectproxy_panel .selectproxy_panel_content .selectproxy_panel_innerview .selectproxy_panel_item .selectproxy_panel_item_text{
+            height:31px;
+			width:280px;
+            line-height:31px;
+            text-align:center;
+            font-size:14px;
+			position:absolute;
+        }
+        #selectproxy_panel .selectproxy_panel_content .selectproxy_panel_innerview .selectproxy_panel_item .selectproxy_panel_item_checked{
+            width:309px;
+			height:31px;
+			background-image:url("img/bg/selected.png");
+			position:absolute;
+			left:-13px;
+        }
+         #selectproxy_panel .selectproxy_panel_content .selectproxy_panel_innerview .selectproxy_panel_item .selectproxy_panel_item_no_checked{
+            width:309px;
+			height:31px;
+			position:absolute;
+			left:-13px;
+         }
+        .selectproxy_panel_face{
+            height:18px;
+            line-height:18px;
+            vertical-align:middle;
+            border:solid 1px #ccc;
+            background-color:white;
+            display:inline-block;
+            position:relative;
+            -webkit-border-radius: 3px;
+        }
+        .selectproxy_panel_face .selectproxy_panel_face_select{
+            background-image:url("img/button/drop_down.png");
+            background-repeat:no-repeat;
+            background-position:center center;
+            width:18px;
+            height:18px;
+            position:absolute;
+            right:0px;
+            top:0px;
+        }
+        .selectproxy_panel_face .selectproxy_panel_face_text{
+            color:#000;
+            font-size:11px;
+            overflow:hidden;
+            display:inline-block;
+            float:left;
+			padding-left:5px;
+			font-weight:bold;
+        }

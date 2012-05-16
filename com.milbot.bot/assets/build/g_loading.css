@@ -1,0 +1,62 @@
+﻿/*loading*/
+.loading1
+{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    height: 320px;
+    width: 480px;
+    background-color: #000000;
+    z-index: 1000;
+}
+.loading1 p
+{
+    font-family: arial, verdana, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    color: #FFFFFF;
+    text-align: center;
+    margin: 120px;
+}
+.loading2
+{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    height: 320px;
+    width: 480px;
+    background-image: url(img/frame/transparent.png);
+    background-repeat: repeat;
+    z-index: 1000;
+}
+.loading2 p
+{
+    color: #FFFFFF;
+    font-family: arial, verdana, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    margin: 120px;
+}
+.infopanel
+{
+    position: absolute;
+    left: 79px;
+    top: 80px;
+    height: 95px;
+    width: 322px;
+    background-image: url(img/frame/info.png);
+    z-index: 1001;
+}
+.infopanel p
+{
+    color: #FFFFFF;
+    font-family: arial, verdana, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+}
+.infopanel p b
+{
+    color: #FFFC17;
+}

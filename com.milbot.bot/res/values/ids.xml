@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="browWebView">false</item>
+    <item type="id" name="frameLayout_main">false</item>
+    <item type="id" name="wv1_LinearLayout">false</item>
+    <item type="id" name="wv1">false</item>
+    <item type="id" name="frameLayout1">false</item>
+    <item type="id" name="imageView1">false</item>
+    <item type="id" name="linearlayout_logo">false</item>
+    <item type="id" name="imageView2">false</item>
+    <item type="id" name="progressBar1">false</item>
+    <item type="id" name="text_progress">false</item>
+    <item type="id" name="LinearLayout01">false</item>
+    <item type="id" name="RelativeLayout01">false</item>
+    <item type="id" name="FeaturedAppWebView">false</item>
+    <item type="id" name="FeaturedAppProgressBar">false</item>
+    <item type="id" name="offersWebView">false</item>
+    <item type="id" name="OfferProgressBar">false</item>
+</resources>

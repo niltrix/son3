@@ -1,0 +1,1 @@
+function techtime(time, level){return time*Math.pow(0.8,level-10);}

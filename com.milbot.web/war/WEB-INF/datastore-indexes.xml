@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<datastore-indexes autoGenerate="true">
+    <datastore-index kind="HunterPoint" ancestor="false" source="manual">
+		<property name="level" direction="asc"/>
+		<property name="server" direction="asc"/>
+		<property name="checked" direction="asc"/>
+        <property name="x" direction="asc"/>
+		<property name="y" direction="asc"/>
+    </datastore-index>
+	<datastore-index kind="HunterPoint" ancestor="false" source="manual">
+		<property name="level" direction="asc"/>
+		<property name="server" direction="asc"/>
+		<property name="checked" direction="asc"/>
+    </datastore-index>
+	<datastore-index kind="HunterPoint" ancestor="false" source="manual">
+		<property name="checked" direction="asc"/>
+		<property name="barbarian" direction="asc"/>
+		<property name="robber" direction="asc"/>
+    </datastore-index>
+</datastore-indexes>

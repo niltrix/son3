@@ -1,0 +1,42 @@
+.startpage
+{
+    background-image: url(img/bg/1.jpg);
+    background-repeat: no-repeat;
+    width: 480px;
+    height: 320px;
+    margin: 0;
+    padding: 0;
+}
+.loginform
+{
+    position: absolute;
+    border: 0px;
+    background-image: url(img/frame/transparent.png);
+    background-repeat: repeat;
+    margin: 0;
+    font-size: 14px;
+    color: white;
+    font-family: arial, verdana, sans-serif;
+    font-weight: bold;
+}
+.errorinfo
+{
+    color: #FF0000;
+    height: 60px;
+}
+.loginform a
+{
+    color: #FFFC17;
+    text-decoration: none;
+}
+.story
+{
+		position: absolute;
+    z-index: 2;
+		left: 0px;
+		top: 0px;
+    width: 480px;
+    height: 320px;
+    margin: 0;
+    padding: 0;
+}

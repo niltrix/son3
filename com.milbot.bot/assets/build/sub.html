@@ -1,0 +1,178 @@
+
+<script type="text/javascript" src="data/boot.js"></script>
+<script type="text/javascript" src="data/config.js"></script>
+<script type="text/javascript" src="script/jquery-1.4.2.js"></script>
+<!--<script type="text/javascript" src="script/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="script/jquery.jsonp-1.0.4.min.js"></script>-->
+<script type="text/javascript" src="script/lib.release.js"></script>
+<script type="text/javascript" src="htmls.js"></script>
+<script type="text/javascript">
+
+	function ajaxCall(funcurl, paramsdata, handler) {
+//	alert(funcurl+":"+paramsdata+":"+handler);
+ 		paramsdata = paramsdata || {};
+		paramsdata["_l"] = window.top._l;
+		paramsdata['_p'] = window.top._p?window.top._p:'';
+		var params = {
+			type: "GET",
+			url: funcurl,
+			data: paramsdata,
+			dataType: "jsonp",
+			jsonp: "jsonpcallback",
+			timeout: window.top.CONFIG.AJAX_TIMEOUT,
+			cache: false,
+			success: handler,
+			error:null
+		};
+		$.ajax(params);
+	};
+
+$(function () {
+	//�뜹댆岳→겘
+	var now = new Date();
+	var nextGet = now.getTime() + 3000;
+	function getChatMsg(now)
+	{
+		window.top.Debug.trace(now.getTime() + ":" + nextGet)
+		if(now.getTime() < nextGet)
+		{
+			return false;
+		}
+		
+		//�욕뀓亮뜹룕
+		nextGet = now.getTime() + window.top.CONFIG.AJAX_TIMEOUT;
+		
+		var url = window.top.CONFIG.MYHOST + window.top.CONFIG.FUNC_CHAT;
+		var lineid = -1;
+		if(window.top.chatmsg.length > 0)
+		{
+			lineid = window.top.chatmsg[window.top.chatmsg.length-1].line_id;
+		}
+		ajaxCall(url, {
+				'key': window.top.key,
+				'lineid': lineid
+			}, function (result) {
+ 
+				if (result.code == window.top.CONFIG.SUCCESS)
+				{
+					window.top.parseMsgResult(result);
+				}
+				//no need to wait for the next msg
+				var now = new Date();
+				nextGet = now.getTime() + window.top.CONFIG.CHAT_RELOAD_REATE;
+		});
+		
+		return true;
+	}
+	
+	var nextLoad = 0;
+	//load city info into mainStatus.CITY_INFO
+	function loadCity(now) {
+
+		if(now.getTime() < nextLoad)
+		{
+			return false;
+		}
+		
+		//�욕뀓亮뜹룕
+		nextLoad = now.getTime() + window.top.CONFIG.AJAX_TIMEOUT;
+		
+		var city = window.top.mainStatus.getCity();
+		var url = window.top.CONFIG.MYHOST + window.top.CONFIG.FUNC_CITYINFO;
+		ajaxCall(url, {
+
+			'key': window.top.key,
+			'city': city.id
+		}, function(result){
+			if (result.code == window.top.CONFIG.SUCCESS)
+			{
+				window.top.onCityLoaded(result, city);
+			
+			}
+			var now = new Date();
+			nextLoad = now.getTime() + window.top.CONFIG.CITY_RELOAD_RATE;
+		});
+		
+		return true;
+	}
+	//load now
+	loadCity(now);
+	
+	function reloadCity() {
+		nextLoad = 0;
+		loadCity(new Date());
+	}
+	window.top['reloadCity'] = reloadCity;
+	
+	///////////////////////////////////////////////////////////////////////////////////
+	Utils.QueryString2Cookie();
+	Utils.validateStorage();
+	if (!window._l)
+		window._l = "en";
+	var userinfo = Utils.getCookie("user"), keyinfo = Utils.getCookie("key"), statinfo = Utils.getCookie("status");
+	if (null == userinfo || null == keyinfo)
+		location.href = "start.html";
+	var ispvp = "undefined" != typeof keyinfo.pvp && 1 == keyinfo.pvp, eventinfo = Utils.getCookie("events");
+	CONFIG.MYHOST = keyinfo.server;
+	var key = keyinfo.key, EMA = new EventManager, CMA = new CooldownManager(EMA, key), CMAReady = !1;
+	CONFIG._USE_TOUCHSTART_REPLACE_CLICK && (jQuery.fn.click = jQuery.fn.touch);
+	var pnlLoading = $("#loading");
+	window.selectProxy = new Effect.SelectProxy($("#selectproxy_panel"));
+	var mainStatus = {
+		SUBVIEW : null,
+		CITY : 0,
+		CITY_ID : userinfo.city[0].id,
+		CITY_INFO : null,
+		BUILDING_DATA : null,
+		HERO_DATA : null,
+		ITEM_DATA : null,
+		SOLDIER_DATA : null,
+		TECH_DATA : null,
+		getCity : function () {
+			return userinfo.city[this.CITY]
+		},
+		_END : ""
+	}, chatmsg = [], max_msg_lines = 100, chatDisplay = 0, quests = null, okfunc = null, infofunc = null, brinkfunc = null, guidefunc = null;
+	
+	
+	// function showFreeHeroPanel() {
+	
+		// ajaxCall(CONFIG.MYHOST + CONFIG.FUNC_HERO_RECRUIT, {
+			// key : key,
+			// city : mainStatus.getCity().id,
+			// action : "gen_list",
+			// extra : 1
+		// }, function (i) {
+			// $.each(i.ret.hero, function (i.ret.hero, b) {
+				// //var g = mainStatus.HERO_DATA[b.gid];
+			// }
+		// })
+	// }
+	
+	
+	
+	
+	
+	
+	
+	
+	window.setInterval(function () {
+		var now = new Date();
+		
+		if(window.top.chatDisplay > 0)
+		{
+			if(now.getTime() > window.top.chatDisplay)
+			{
+				
+				window.top.chatDisplay = 0;
+				window.top.hideChatBar();
+				
+			}
+		}
+		
+		return loadCity(now) || getChatMsg(now);
+		
+	},1000);
+});	
+
+</script>

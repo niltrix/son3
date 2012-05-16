@@ -1,0 +1,1 @@
+function buildtime(time, level){if(level<=4){time*=(1-0.08*level);}else{time*=0.8*Math.pow(0.9,(level-12));}return Math.floor(time);}

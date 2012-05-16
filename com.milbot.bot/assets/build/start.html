@@ -1,0 +1,38 @@
+<html>
+<head>
+<!--<meta name = "viewport" content = "width = device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable = no">-->
+    <meta name="viewport" content="width=device-width, user-scalable=yes, target-densitydpi=device-dpi" />
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>login</title>
+    <link rel="stylesheet" type="text/css" href="start.css" />
+    <link rel="stylesheet" type="text/css" href="g_loading.css" />
+    <link rel="stylesheet" type="text/css" href="g_button.css" />
+    <link rel="stylesheet" type="text/css" href="g_tip.css" /> 
+    <style>body{-webkit-user-select:none;-webkit-touch-callout: none;-webkit-tap-highlight-color:rgba(0,0,0,0);background-color: #000000;}</style>
+    <meta name="format-detection" content="telephone=no"/>
+</head>
+<body style="margin:0px;padding:0px;text-align:center;">
+
+<div id="center_container" class="startpage" style="margin:0 auto;width:480px; height:320px; position:relative;text-align:left;">
+</div>
+</body>
+</html>
+<script type="text/javascript" src="data/boot.js"></script>
+
+
+
+
+
+<script type="text/javascript" src="data/config.js"></script>
+
+		<script type="text/javascript" src="script/jquery-1.4.2.js"></script>
+		<!-- <script type="text/javascript" src="script/jquery-1.7.2.min.js"></script> -->
+		<!--<script type="text/javascript" src="script/jquery.jsonp-1.0.4.min.js"></script>-->
+		<script type="text/javascript" src="script/lib.release.js"></script>
+		<script type="text/javascript" src="htmls.js"></script>
+		<script type="text/javascript" src="views.js"></script>
+		
+<script type="text/javascript">function displayVerInfo(a){window._ver=a}(function(){hu=window.location.search.substring(1);if(null!=hu&&""!=hu){gy=hu.split("&");for(i=0;i<gy.length;i++)if(ft=gy[i].split("="),"undefined"!=typeof ft[1]&&null!=ft[1]&&""!=ft[1]&&(unescape(ft[1]),"_l"==ft[0]))window._l=ft[1]}})();Utils.loadImage($("#center_container"),"img/_lng/"+window._l+"/bg/1.jpg");include(["translation/kr/lng.js"]);
+$.getJSON("translation/kr/translate.js",function(a){MARKERS=a;(new ui.TranslationSubViewContainer($("#center_container"),a)).load("f_start",function(){include(["start.js"],function(){})})});
+</script>

@@ -1,0 +1,121 @@
+
+/*tip*/
+.tooltip
+{
+    position: absolute;
+    z-index: 10;
+    border: 0px;
+    background-image: url(img/frame/transparent.png);
+    padding: 1px;
+    margin: 0;
+    text-decoration: none;
+}
+.tooltip p
+{
+    margin: 0;
+    font-size: 11px;
+    color: #FFFFFF;
+    font-family: arial, verdana, sans-serif;
+}
+.tooltip p b
+{
+    color: #FFFC17;
+}
+.tooltip2
+{
+    position: absolute;
+    z-index: 10;
+    border: 0px;
+    background-image: url(img/frame/transparent.png);
+    padding: 1px;
+    margin: 0;
+    text-decoration: none;
+}
+.tooltip2 p
+{
+    margin: 0;
+    font-size: 12px;
+    color: #FFFFFF;
+    font-family: arial, verdana, sans-serif;
+}
+.tooltip2 p b
+{
+    color: #FFFC17;
+}
+.tooltip3
+{
+    position: absolute;
+    z-index: 1;
+    border: 0px;
+    background-image: url(img/frame/transparent.png);
+    padding: 1px;
+    margin: 0;
+    text-decoration: none;
+    font-size: 12px;
+    color: #FFFFFF;
+    font-family: arial, verdana, sans-serif;
+}
+.tooltip3 b
+{
+    color: #FFFC17;
+}
+.tooltip14
+{
+    position: absolute;
+    z-index: 10;
+    border: 0px;
+    background-image: url(img/frame/transparent.png);
+    padding: 1px;
+    margin: 0;
+    text-decoration: none;
+}
+.tooltip14 p
+{
+    margin: 0;
+    font-size: 14px;
+    color: #FFFFFF;
+    font-family: arial, verdana, sans-serif;
+}
+.tooltip14 p b
+{
+    color: #FFFC17;
+}
+.font12
+{
+    margin: 0;
+    font-size: 12px;
+    color: #FFFFFF;
+    font-family: arial, verdana, sans-serif;
+    text-decoration: none;
+}
+.font12 b
+{
+    color: #FFFC17;
+}
+.font14
+{
+    margin: 0;
+    font-size: 14px;
+    color: #FFFFFF;
+    font-family: arial, verdana, sans-serif;
+    text-decoration: none;
+}
+.font14 b
+{
+    color: #FFFC17;
+}
+.black12
+{
+    font-size: 12px;
+    color: #000000;
+    font-family: arial, verdana, sans-serif;
+    text-decoration: none;
+}
+.font11
+{
+    margin: 0;
+    font-size: 11px;
+    color: #FFFFFF;
+    font-family: arial, verdana, sans-serif;
+    text-decoration: none;
+}
