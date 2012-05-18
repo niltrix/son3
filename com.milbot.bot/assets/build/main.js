@@ -1254,8 +1254,8 @@ function startScout() {
 	scoutpoint.offset = parseInt($("#tr_troop").val());
 	scoutpoint.limit = 100;
 	scoutpoint.level = 1;
-	var ret = Utils.getCookie("scoutinfo");
-	ret!=null?scoutpoint=ret:null;
+//	var ret = Utils.getCookie("scoutinfo");
+//	ret!=null?scoutpoint=ret:null;
 	
 	botEMA.async("getHMap", 
 	scoutpoint.server, scoutpoint.offset, scoutpoint.limit, scoutpoint.level);
@@ -1265,7 +1265,7 @@ function startScout() {
 function stopScout() {
 	botEMA.unbind("getHMap");
 	botEMA.unbind("goScout");
-	Utils.setCookie("scoutinfo", scoutpoint);
+//	Utils.setCookie("scoutinfo", scoutpoint);
 	g_huntermaps = null;
 	g_hunter_index = 0;
 	showInfo("stopScout");
