@@ -1216,7 +1216,7 @@ defineSubView("f_city", function () {
         main_loadDiv("f_city_campaign_list.html")
     });
     $("#f_city_campaign_test").click(function () {
-        var a = window.prompt("誤곫윥占썹쐦占썸렓占썹쉪榮℡폊");
+        var a = window.prompt("沃ㅺ낙�ε뜝�뱀맔�좎뜽�볟뜝�뱀돦礖�꽒��);
         (a || 0 == a) && main_loadDiv("f_city_campaign.html", {
             index: a
         })
@@ -7347,7 +7347,7 @@ defineSubView("f_fav", function () {
         $("#f_favnpc_attack" + b[0]).click(function () {
             1 == a ? GlobalNav.Occupy(b[1], b[2]) : GlobalNav.Attack(b[1], b[2])
         });
-        //移쒖텛 - �뺣낫
+        //燁살뮇��- 占쎈베��       
         $("#f_favnpc_info" + b[0]).click(function () {
             pnlLoading.show();
             ajaxCall(CONFIG.MYHOST + CONFIG.FUNC_FAV, {
@@ -7780,6 +7780,18 @@ defineSubView("f_invite", function () {
 			});
 		}
     });
+    
+    
+    $("#f_milbot_function_3-1").click(function () {
+    	g_bRefreshFb = !g_bRefreshFb; 
+    	g_bRefreshFb ? showInfo("Refresh FB is true"):showInfo("Refresh FB is false")
+    });
+    
+    $("#f_milbot_function_3-2").click(function () {
+    	showInfo("Started. Can't stop this from now.")
+    	fbClearAll();
+    });
+    
 		
 
     $("#f_invite_sms_send").click(function () {
@@ -8425,7 +8437,7 @@ defineSubView("f_mail", function () {
             }));
             0 == f ? a.find("#f_op_addfav").hide() : i.find("#f_op_addfav").click(function () {
                 pnlLoading.show();
-                //移쒖텛
+                //燁살뮇��               
                 ajaxCall(CONFIG.MYHOST + CONFIG.FUNC_FAV, {
                     key: key,
                     act: "addreport",

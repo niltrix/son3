@@ -980,7 +980,7 @@ function assignTroop(enemy, soldierCnt) {
 				var d = mainStatus.HERO_DATA[gen.gid];
 				if(d.rank == "a") {
 					g_heros.splice(i,1);
-					// i--;
+					i--;
 				}
 			}
 
@@ -1111,7 +1111,7 @@ function myAttack() {
 			for( i = 0; i < npcList.length; i++) {
 				if(npcList[i][4] >= 3) {
 					npcList.splice(i, 1);
-					// i--;
+					i--;
 				}
 				if(npcList[i][3] > 1) {
 					
@@ -1121,6 +1121,7 @@ function myAttack() {
 						id : npcList[i][0]
 					}, function() {
 						npcList.splice(i, 1)
+						i--;
 					})
 				}
 			}
