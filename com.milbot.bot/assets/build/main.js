@@ -574,10 +574,10 @@ var staticBuff = {
 	ALLY_ARMYDEF : 5,
 	TECH_WM : 20,
 	TECH_DM : 20,
-	TECH_SOD : 18,
+	TECH_SOD : 19,
 	TECH_SOA : 19,
-	TECH_CS : 17,
-	TECH_DS : 18,
+	TECH_CS : 18,
+	TECH_DS : 19,
 	_END : ""
 }
 
@@ -1057,6 +1057,15 @@ function parseFAVReport(npc) {
 			a2[0] = a2[0].replace(")", "");
 			nightmareCnt = parseInt(a2[0]);
 		}
+		if (horrorCnt > 1000) {
+			g_npcindex++;
+			if(g_npclist.length > g_npcindex) {
+				setTimeout(parseFAVReport(g_npclist[g_npcindex]), 0);
+			} else {
+				setTimeout(myAttack(), 0);
+			}
+			return;
+		}
 		var powerinfo = calcRobberPower(horrorCnt, nightmareCnt, npc[3]);
 		var enemyInfo = {
 			id : npc[0],
@@ -1114,7 +1123,6 @@ function myAttack() {
 					i--;
 				}
 				if(npcList[i][3] > 1) {
-					
 					var c = CONFIG.MYHOST + CONFIG.FUNC_FAV;
 					ajaxCall(c, {
 						key : key,
@@ -1172,6 +1180,11 @@ function startBot() {
 			
 		});
 	} else {
+		for(var i=0;i < userinfo.city.length;i++) {
+			if(mainStatus.CITY_ID == userinfo.city[i].id) {
+				nCityIndex = i;
+			}
+		}
 		myAttack(99999);
 	}
 }

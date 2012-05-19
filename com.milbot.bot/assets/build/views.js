@@ -1216,7 +1216,7 @@ defineSubView("f_city", function () {
         main_loadDiv("f_city_campaign_list.html")
     });
     $("#f_city_campaign_test").click(function () {
-        var a = window.prompt("沃ㅺ낙�ε뜝�뱀맔�좎뜽�볟뜝�뱀돦礖�꽒��);
+        var a = window.prompt("f_city_campaign_test");
         (a || 0 == a) && main_loadDiv("f_city_campaign.html", {
             index: a
         })
