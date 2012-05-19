@@ -619,9 +619,9 @@ function ajaxCallMB(a, c, e, f) {
 		success : function (a) {
 			// onAjaxSuccess(a, e, f)
 			if (a.code == CONFIG.SUCCESS) {
-				e(a);
+				if ($.isFunction(e)) e(a);
 			} else {
-				f(a);
+				if ($.isFunction(f)) f(a);
 			}
 			pnlLoading.hasClass("loading2") && pnlLoading.hide()
 		},
@@ -799,8 +799,7 @@ function calcDefensive(attack) {
 			// for(var iCnt = 0; iCnt < genList.length; iCnt++) {
 				// var gen = genList[iCnt];
 				// var d = mainStatus.HERO_DATA[gen.gid];
-				// //�μ닔 �덈꺼 �좏깮
-				// if(d.rank == "a") {
+				// //�μ닔 �덈��좏�				// if(d.rank == "a") {
 					// continue;
 				// }
 				// for(var yCnt = 0; yCnt < npcList.length; yCnt++) {
@@ -859,8 +858,7 @@ function calcDefensive(attack) {
 				// for(var iCnt = 0; iCnt < genList.length; iCnt++) {
 					// var gen = genList[iCnt];
 					// var d = mainStatus.HERO_DATA[gen.gid];
-					// //�μ닔 �덈꺼 �좏깮
-					// if(d.rank == "a") {
+					// //�μ닔 �덈��좏�					// if(d.rank == "a") {
 						// continue;
 					// }
 					// switch(npc[3]) {
@@ -983,9 +981,7 @@ function assignTroop(enemy, soldierCnt) {
 					i--;
 				}
 			}
-
 			displayMsg("["+userinfo.city[nCityIndex].name+"] attackNpc2("+enemy.x+","+enemy.y+")");	
-			
 			for(var iCnt = 0; iCnt < g_heros.length; iCnt++) {
 				// if(g_heros[iCnt].c2 < enemy.requiredTroop) {
 					// g_heros.splice(iCnt,1);
@@ -1006,7 +1002,7 @@ function assignTroop(enemy, soldierCnt) {
 				nCityIndex++;
 				if(nCityIndex == userinfo.city.length) { nCityIndex = 0; }
 				displayMsg("Move to "+userinfo.city[nCityIndex].name+"\n"+"NPC index:"+g_npcindex+"/"+g_npclist.length);
-				setTimeout(assignTroop(enemy,soldierCnt),1000);
+				setTimeout(assignTroop(enemy,soldierCnt),1000*60*3);
 				return;
 			}
 			
@@ -1022,7 +1018,9 @@ function assignTroop(enemy, soldierCnt) {
 			if(nCityIndex == userinfo.city.length) { nCityIndex = 0; }
 			displayMsg("Move to "+userinfo.city[nCityIndex].name+"\n"+"NPC index:"+g_npcindex+"/"+g_npclist.length);
 			window.droid && window.droid.clearCache && window.droid.clearCache();
-			setTimeout(assignTroop(enemy,soldierCnt),Math.floor(Math.random() * 5000)+5000)
+//			setTimeout(assignTroop(enemy,soldierCnt),Math.floor(Math.random() * 5000)+5000)
+			setTimeout(assignTroop(enemy,soldierCnt),1000*60*3)
+			
 		}
 	}, function(a) {
 		setTimeout(assignTroop(enemy,soldierCnt),Math.floor(Math.random() * 5000)+3000);
@@ -1045,15 +1043,15 @@ function parseFAVReport(npc) {
 		var info = b.ret.fav[1];
 		var horrorCnt = 0;
 		var nightmareCnt = 0;
-		var a1 = info.match("(산도적)\\(\\d*\\)");
+		var a1 = info.match("(�도\\(\\d*\\)");
 		if(a1 != null) {
-			a1[0] = a1[0].replace ("산도적(", "");
+			a1[0] = a1[0].replace ("�도", "");
 			a1[0] = a1[0].replace(")", "");
 			horrorCnt = parseInt(a1[0]);
 		}
-		var a2 = info.match("(화적)\\(\\d*\\)");
+		var a2 = info.match("(�적)\\(\\d*\\)");
 		if (a2 != null) {
-			a2[0] = a2[0].replace ("화적(", "");
+			a2[0] = a2[0].replace ("�적(", "");
 			a2[0] = a2[0].replace(")", "");
 			nightmareCnt = parseInt(a2[0]);
 		}
@@ -1095,7 +1093,7 @@ function parseFAVReport(npc) {
 				if(nCityIndex == userinfo.city.length) { nCityIndex = 0; }
 				displayMsg("Move to "+userinfo.city[nCityIndex].name+"\n"+"NPC index:"+g_npcindex+"/"+g_npclist.length);
 				window.droid && window.droid.clearCache && window.droid.clearCache();
-				setTimeout(parseFAVReport(npc), 1000);
+				setTimeout(parseFAVReport(npc), 1000*60*3);
 			}
 		}, function(a, d) {
 			setTimeout(parseFAVReport(npc), 1000);
@@ -1107,12 +1105,15 @@ function parseFAVReport(npc) {
 }
 
 function myAttack() {
+	displayMsg("myAttack");
 	ajaxCallMB(CONFIG.MYHOST + CONFIG.FUNC_FAV, {
 		key : key,
 		act : "getfavnpc",
 		cat : 2
 	}, function(c) {
+		displayMsg("NPC ret code :" + c.code)
 		var npcList = c.ret.favs;
+		displayMsg("NPC ret code :" + npcList.length)
 		// if(!bUseBug) {
 		// prepareAttackBug(npcList, soldierCnt);
 		// } else {
@@ -1121,8 +1122,7 @@ function myAttack() {
 				if(npcList[i][4] >= 3) {
 					npcList.splice(i, 1);
 					i--;
-				}
-				if(npcList[i][3] > 1) {
+				} else if(npcList[i][3] > 1) {
 					var c = CONFIG.MYHOST + CONFIG.FUNC_FAV;
 					ajaxCall(c, {
 						key : key,
@@ -1492,97 +1492,228 @@ function transportMilbot(posX, posY, cityIndex, troopCnt, golds) {
 	return !1
 }
 
-// for automatic fb
-var fbTimerId;
-var fbCurIndex = 0;
-var fbLevel = 1;
-var fbPathLev1 = new Array(1, 2, 4, 5, 8);
+//for automatic fb
+var g_fbTimerId;
+var g_fbCurIndex = 0;
+var g_fbLevel = 4;
+// var g_fbPathLev1 = new Array(0, 1, 2, 4, 5, 8);
+var g_fbPathLev1 = new Array(0, 1, 4, 7, 6, 10, 12, 13, 15);
 var g_fbHeroIds = new Array();
-var g_remainFbTimes = 0;
-var g_fbStartTimerId = null;
+var g_fbHeros = new Array();
+var g_bRefreshFb = false;
 
-function fbAttack(a, b) {
-        ajaxCallMB(CONFIG.MYHOST + CONFIG.FUNC_FB_ATTACK, {
-        key: keyinfo.key,
-        gen: a,
-        pos: b
-        }, function (a) { 
-        });
+
+function fbAttack(a, b, c) {
+	for(var i=0; i<c; i++) {
+		ajaxCallMB(CONFIG.MYHOST + CONFIG.FUNC_FB_ATTACK, {
+	    	key: keyinfo.key,
+	        gen: a,
+	        pos: b
+		}, function (e) {			
+		});
+	}	
 }
 
-function fbPrepare() {
-        ajaxCallMB(CONFIG.MYHOST + CONFIG.FUNC_HERO_RECRUIT, {
-                key : key,
-                city : mainStatus.CITY_ID,
-                action : "gen_list",
-                extra : 1
-        }, function(i) {
-                var heros = i.ret.hero;
-                if("undefined" != typeof heros && null != heros && 1 < heros.length) {
-                        for(var i = 0; i < heros.length; i++) {
-                                var gen = heros[i];
-                                var d = mainStatus.HERO_DATA[gen.gid];
-                                if(d.rank == "a") {
-                                        heros.splice(i,1);
-                                        i--;
-                                } else {
-                                        g_fbHeroIds.push(gen.gid);
-                                }
-                        }
-                        
-                        if(g_fbHeroIds.length > 1) {
-                                ajaxCallMB(CONFIG.MYHOST + CONFIG.FUNC_FB_START, {
-                                        key: keyinfo.key,
-                        city: mainStatus.CITY_ID,
-                        fb: "0",
-                        gen: g_fbHeroIds[0] + "|" + g_fbHeroIds[1],
-                        soldier_num15: "700|1"
-                }, function (a) {
-                        for(var i=0; i<100; i++) {                                              
-                                fbAttack(g_fbHeroIds[0], fbPathLev1[fbCurIndex]);
-                        }
-                        fbCurIndex++;
-                        if(fbCurIndex == fbPathLev1.lenth) {
-                                clearInterval(fbTimerId);
-                        }
-                        
-                        fbTimerId = setInterval(function() {
-                        for(var i=0; i<100; i++) {                                              
-                                fbAttack(g_fbHeroIds[0], fbPathLev1[fbCurIndex]);
-                        }
-                        fbCurIndex++;
-                        if(fbCurIndex == fbPathLev1.lenth) {
-                                clearInterval(fbTimerId);
-                                fbCurIndex = 0;
-                        }
-                    }, (3 * 60 * 1000));
-                });     
-                        }
+function getPathIndex(val) {	
+	for(var i=0; i<g_fbPathLev1.length; i++) {
+		if(val == g_fbPathLev1[i]) { 
+			return i;
+		}
+	}	
+}
+
+function getNextfbLoc(val) {
+	for(var i=0; i<g_fbPathLev1.length; i++) {
+//		if(g_fbPathLev1[i] < val) {
+//			continue;
+//		} else if(g_fbPathLev1[i] == val) {
+//			if(i < g_fbPathLev1.length) {
+//				return g_fbPathLev1[i+1];
+//			} else {
+//				return -1;
+//			}			
+//		} else if(g_fbPathLev1[i] > val) {
+//			return g_fbPathLev1[i];
+//		}
+		if (g_fbPathLev1[i] == val) {
+			return ((i+1)==g_fbPathLev1.length)?-1:g_fbPathLev1[i+1];
+		}
+		return -1;
+	}
+}
+
+function fbAttackManager(loopCnt) {	
+	var nAttackCnt = loopCnt;	            		                        			
+	g_fbTimerId = setInterval(function(a) {		
+		// check current step
+		ajaxCallMB(CONFIG.MYHOST + CONFIG.FUNC_FB_LIST, {
+            key: keyinfo.key
+        }, function (b) {
+        	if("undefined" != typeof b.ret.status && null != b.ret.status) {
+        		var fbLoc;
+        		if(b.ret.status.length == 0) {
+        			fbLoc = 0;
+        		} else {
+        			for(var i=0; i<g_fbPathLev1[g_fbPathLev1.length-1]; i++) {
+        				if("undefined" != typeof b.ret.status[i] && null != b.ret.status[i]) {
+        					fbLoc = b.ret.status[i];
+        				} else {
+        					break;
+        				}
+        			}
+        		}
+        		
+        		if(fbLoc == g_fbPathLev1[g_fbPathLev1.length-1]) {            	
+               		clearInterval(g_fbTimerId);           		           		           		
+               		ajaxCallMB(CONFIG.MYHOST + CONFIG.FUNC_FB_OUT, {
+                        key: keyinfo.key
+                    }, function (b) {
+                    	displayMsg("[FB]Cleared FB");
+                    	setTimeout(fbClearAll(), 3000);
+                    }, function () {
+                    	displayMsg("[FB]Failed to quit FB. Quit FB manually.");
+                    });
+                } else {
+                	var nextFbLoc = getNextfbLoc(fbLoc);
+                	if(nextFbLoc < 0) {
+                		displayMsg("[FB]Unknown Error!!");
+                		clearInterval(g_fbTimerId);
+                	} else {
+                		displayMsg("[FB]Trying to proceed step<" + nextFbLoc + ">");
+                    	setTimeout(fbAttack(g_fbHeroIds[0], nextFbLoc, loopCnt), 3000);	
+                	}            	
                 }
-        });
+        	}        	     
+        }, function(c) {
+        	displayMsg("[FB]Can't retrieve current step");
+        })		
+
+   	}, 3 * 60 * 1000);    	
 }
 
-function fbStart() {
-        ajaxCallMB(CONFIG.MYHOST + CONFIG.FUNC_FB_LIST, {
-                key: keyinfo.key
-        }, function(a) {
-                g_remainFbTimes = a.ret.times;
-                if(g_remainFbTimes > 0) {
-                        fbPrepare();
-                        g_remainFbTimes--;
-                        if(g_remainFbTimes > 0) {
-                                g_fbStartTimerId = setInterval(function() {
-                                        fbPrepare();
-                                        g_remainFbTimes--;
-                                        if(g_remainFbTimes == 0) {
-                                                clearInterval(g_fbStartTimerId);
-                                                g_remainFbTimes = 0;
-                                        }
-                                } , (18 * 60 * 1000)); 
-                        }
-                }
-        });
+function fbStart(bFbStarted) {
+	displayMsg("[FB]Start FB level 1");
+	var nAttackCnt = 100;
+	if(bFbStarted) {				 
+		fbAttackManager(nAttackCnt);
+	} else {
+		var hero1=0, hero2=0;
+		for(var i=0; i < g_fbHeros.length;i++) {
+			if(g_fbHeros[i].c2 > 1500) {
+				hero1 = g_fbHeros[i].gid;
+			} else {
+				hero2 = g_fbHeros[i].gid;
+			}
+		}
+		ajaxCallMB(CONFIG.MYHOST + CONFIG.FUNC_FB_START, {
+			key: keyinfo.key,
+			city: mainStatus.CITY_ID,
+			fb: g_fbLevel-1,
+			gen: hero1 + "|" + hero2,
+			soldier_num8: "700|0",
+			soldier_num15: "0|1",
+			soldier_num17: "800|0"
+		}, function (a) {			
+			fbAttackManager(nAttackCnt);
+	    }, function(a) {
+	    	displayMsg("[FB]Stopped! Failed to start FB!");
+	    	setTimeout(fbStart(bFbStarted), 100);
+	    });	
+	}
 }
+
+function fbReadyAndGo(bHasHero) {	
+	if (bHasHero) {
+		fbStart(true);
+	} else {
+		ajaxCallMB(CONFIG.MYHOST + CONFIG.FUNC_HERO_RECRUIT, {
+			key : key,
+			city : mainStatus.CITY_ID,
+			action : "gen_list",
+			extra : 1
+		}, function(i) {		
+			var heros = i.ret.hero;
+			if("undefined" != typeof heros && null != heros && 1 < heros.length) {
+				for(var i = 0; i < heros.length; i++) {
+					var gen = heros[i];
+					var d = mainStatus.HERO_DATA[gen.gid];
+					if(d.rank == "a") {
+						heros.splice(i,1);
+						i--;
+					} else {
+						g_fbHeroIds.push(gen.gid);
+					}
+				}
+				g_fbHeros = heros;				
+				Utils.setCookie("fbHeros", g_fbHeroIds);
+				if(g_fbHeroIds.length > 1) {
+					displayMsg("[FB]Ok. Assigned heros.");
+					fbStart(false);
+				} else {
+					displayMsg("[FB]Stopped! No free heros..");
+				}
+			}
+		}, function(a) {
+			displayMsg("[FB]Stopped! Failed to get hero list! ");
+		});	
+	}
+}
+
+function fbClearAll() {
+	ajaxCallMB(CONFIG.MYHOST + CONFIG.FUNC_FB_LIST, {
+		key: keyinfo.key
+	}, function(a) {
+		if("undefined" != typeof a.ret.times && null != a.ret.times) {			
+			var remainFbTimes = a.ret.times;
+			displayMsg("[FB]Remaining fb: " + remainFbTimes);
+			if(remainFbTimes > 0) {			
+				setTimeout(fbReadyAndGo(false), 1000);
+			} else {
+				showInfo("[FB]Cleard All FB of today");
+				// if buy option is true
+				if(g_bRefreshFb) {
+					setTimeout(function() {
+						ajaxCallMB(CONFIG.MYHOST + CONFIG.FUNC_FB_ADDTIMES, {
+		                    key: key
+		                }, function(b) {
+		                	showInfo("[FB]Refresh FB by using wonbo");
+		                	setTimeout(fbClearAll(), 1000);
+		                }, function(c){
+		                	showInfo("[FB]Stopped! No more wonbo to refresh FB");
+		                });	
+					}, 1000);	
+				}								
+			}
+		} else {
+			displayMsg("[FB]is ongoing..");
+			
+			if("undefined" != typeof a.ret.remaining_time && null != a.ret.remaining_time && a.ret.remaining_time < 0) {
+				ajaxCallMB(CONFIG.MYHOST + CONFIG.FUNC_FB_OUT, {
+	                key: keyinfo.key
+	            }, function (b) {
+	            	displayMsg("[FB]Quit timeout-FB and restart..");
+	            	setTimeout(fbClearAll(), 3000);
+	            }, function () {
+	            	displayMsg("[FB]Stopped Failed to quit FB. Quit FB manually.");
+	            });	
+			} else {
+				g_fbHeroIds = Utils.getCookie("fbHeros");				
+				if(null != g_fbHeroIds[0] && null != g_fbHeroIds[1]) {		        	
+		        	setTimeout(fbReadyAndGo(true), 1000);
+				} else {
+					displayMsg("[FB]Stopped! No army data");
+				}				
+			}
+		}
+		
+	}, function(e) {
+		displayMsg("[FB]Can't get FB info. Trying to get FB info again...");
+		setTimeout(fbClearAll(), 1000);
+	});
+}
+
+
+
 /*
 var ExploreMapClass = new ExploreMap();
 var ExploreMap = function() {
@@ -1801,7 +1932,8 @@ $(function () {
             				a["g2f"] = 50000;
             			} else {
             				if(b.ret.city[2] == 0) {
-            					showInfo("Empty Gold in " +value.name);
+            					displayMsg("Empty Gold in " +value.name);
+            					return;
             				} else {
             					a["g2f"] = b.ret.city[2];
             				}
