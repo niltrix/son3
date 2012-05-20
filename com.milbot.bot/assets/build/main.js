@@ -623,6 +623,7 @@ function ajaxCallMB(a, c, e, f) {
 			} else {
 				if ($.isFunction(f)) f(a);
 			}
+			displayMsg(a.code);
 			pnlLoading.hasClass("loading2") && pnlLoading.hide()
 		},
 		error : function (a, d) {
@@ -1043,15 +1044,15 @@ function parseFAVReport(npc) {
 		var info = b.ret.fav[1];
 		var horrorCnt = 0;
 		var nightmareCnt = 0;
-		var a1 = info.match("(�도\\(\\d*\\)");
+		var a1 = info.match("(산도적)\\(\\d*\\)");
 		if(a1 != null) {
-			a1[0] = a1[0].replace ("�도", "");
+			a1[0] = a1[0].replace ("산도적(", "");
 			a1[0] = a1[0].replace(")", "");
 			horrorCnt = parseInt(a1[0]);
 		}
-		var a2 = info.match("(�적)\\(\\d*\\)");
+		var a2 = info.match("(화적)\\(\\d*\\)");
 		if (a2 != null) {
-			a2[0] = a2[0].replace ("�적(", "");
+			a2[0] = a2[0].replace ("화적(", "");
 			a2[0] = a2[0].replace(")", "");
 			nightmareCnt = parseInt(a2[0]);
 		}
