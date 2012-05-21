@@ -1,6 +1,7 @@
 package com.milbot.bot;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -69,6 +70,9 @@ public class BotActivity extends Activity {
 		
 		mainView = findViewById(R.id.wv1);
 		initWebView();
+		
+		FileBotLog.reset();
+		FileBotLog.initialize(getApplicationContext());
 	}
 
 	@Override
@@ -332,6 +336,10 @@ public class BotActivity extends Activity {
 				}
 				return ret;
 			}
+			
+			public void botlog(String msg) {
+				FileBotLog.write(msg);
+			}
 		}
 		, "droid");
 	}
@@ -475,7 +483,5 @@ public class BotActivity extends Activity {
 			}
 			return super.shouldOverrideUrlLoading(view, url);
 		}
-		
-		
-	}  
+	}
 }
