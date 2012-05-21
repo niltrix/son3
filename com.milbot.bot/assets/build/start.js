@@ -169,12 +169,12 @@ $(function () {
 	}
 	
 	function r(a, b, c) {
-//		var ret = window.droid.authenticate(a);
+		var ret = window.droid.authenticate(a);
 		pnlLoading.show();
-//		if(ret != "success") {
-//			showInfo("No Authentication Info, Bye~");
-//			window.droid.exit();
-//		}
+		if(ret != "success") {
+			showInfo("No Authentication Info, Bye~");
+			window.droid.exit();
+		}
 
 		var e = Utils.getCookie("key");
 		if (null == e || e.user != a || e.pvp != c) {
