@@ -601,6 +601,7 @@ var scoutpoint = {
 function displayMsg(msg) {
 	"f_chat.html" != mainStatus.SUBVIEW && ($("#bot_msg").html(msg), $("#bot_msg").show());
 	//EMA.trigger("newchatmsg");
+	window.droid && window.droid.botlog && window.droid.botlog(msg);
 }
 
 function ajaxCallMB(a, c, e, f) {
@@ -622,8 +623,8 @@ function ajaxCallMB(a, c, e, f) {
 				if ($.isFunction(e)) e(a);
 			} else {
 				if ($.isFunction(f)) f(a);
+				displayMsg(LNG.ERROR.SERVER[a.code]);
 			}
-			displayMsg(a.code);
 			pnlLoading.hasClass("loading2") && pnlLoading.hide()
 		},
 		error : function (a, d) {
@@ -640,7 +641,7 @@ function ajaxCallMB(a, c, e, f) {
 					case "parsererror":
 						b = LNG.ERROR.AJAX_PARSE_ERROR
 				}
-				
+				displayMsg(b);
 				pnlLoading.hasClass("loading2") ? (pnlLoading.hide(), showInfo(b)) : showInfo(b, function() {
 					location.href = "start.html"
 				})
@@ -700,8 +701,8 @@ function confirmAttackNpc(a, c, e) {
 				CMA.add(attr.ret.cd);
 			}
 		}, function (a) {
+			displayMsg(LNG.ERROR.SERVER[a.code]);
 			if(a.code == 2537 || a.code == 2510) {
-				displayMsg("insufficient Resource");
 				g_nextcity = true;
 			}
 		})	
@@ -957,6 +958,7 @@ function calcDefensive(attack) {
 var g_heros = null;
 var g_nextcity = false;
 var g_attackcntbycity = 10;
+var g_nAttackHeroCnt = 0;
 function assignTroop(enemy, soldierCnt) {
 	if(!g_SmartBot) {
 		g_npclist=null,g_npcindex=0,g_heros=null;
@@ -973,6 +975,7 @@ function assignTroop(enemy, soldierCnt) {
 	}, function(i) {
 		--g_attackcntbycity;
 		g_heros = i.ret.hero;
+		
 		if("undefined" != typeof g_heros && null != g_heros && 0 != g_heros.length) {
 			for(var i = 0; i < g_heros.length; i++) {
 				var gen = g_heros[i];
@@ -992,10 +995,26 @@ function assignTroop(enemy, soldierCnt) {
 					if(a.code == 2544) {
 						displayMsg("["+userinfo.city[nCityIndex].name+"] Not enough soldier");
 						g_nextcity = true;
+					} else if (a.code.indexof("visit") != -1){
+						displayMsg(a.code);
+						g_SmartBot = false;
+						showInfo("You visit too often");
+						return;
+					} else {
+						g_nAttackHeroCnt++;
 					}
 				});
 				soldierCnt -= enemy.requiredTroop;
 			}
+			
+//			if(g_nAttackHeroCnt > 10) {
+//				setTimeout(function(enemy, soldierCnt){
+//					showConfirm("do you wanna go to next city", function(enemy, soldierCnt){
+//						setTimeout(assignTroop(enemy,soldierCnt), 0);
+//					});
+//				}, 1000*60*3)
+//				return;
+//			}
 			
 			// if(g_heros.length == 0 || g_nextcity || soldierCnt < 0) {
 			if(g_attackcntbycity<0) {
@@ -1004,6 +1023,11 @@ function assignTroop(enemy, soldierCnt) {
 				if(nCityIndex == userinfo.city.length) { nCityIndex = 0; }
 				displayMsg("Move to "+userinfo.city[nCityIndex].name+"\n"+"NPC index:"+g_npcindex+"/"+g_npclist.length);
 				setTimeout(assignTroop(enemy,soldierCnt),1000*60*3);
+//				setTimeout(function(enemy, soldierCnt){
+//					showConfirm("do you wanna go to next city", function(enemy, soldierCnt){
+//						setTimeout(assignTroop(enemy,soldierCnt), 0);
+//					});
+//				}, 1000*60*3)
 				return;
 			}
 			
@@ -1021,10 +1045,20 @@ function assignTroop(enemy, soldierCnt) {
 			window.droid && window.droid.clearCache && window.droid.clearCache();
 //			setTimeout(assignTroop(enemy,soldierCnt),Math.floor(Math.random() * 5000)+5000)
 			setTimeout(assignTroop(enemy,soldierCnt),1000*60*3)
+//			setTimeout(function(enemy, soldierCnt){
+//				showConfirm("do you wanna go to next city", function(enemy, soldierCnt){
+//					setTimeout(assignTroop(enemy,soldierCnt), 0);
+//				});
+//			}, 1000*60*3)
 			
 		}
 	}, function(a) {
 		setTimeout(assignTroop(enemy,soldierCnt),Math.floor(Math.random() * 5000)+3000);
+//		setTimeout(function(enemy, soldierCnt){
+//			showConfirm("do you wanna retry assignTroop", function(enemy, soldierCnt){
+//				setTimeout(assignTroop(enemy,soldierCnt), 0);
+//			});
+//		}, 1000*60*3)
 	});
 }
 
@@ -1075,7 +1109,6 @@ function parseFAVReport(npc) {
 		$.extend(enemyInfo, powerinfo);
 		$.extend(enemyInfo, {requiredTroop : calcDefensive(enemyInfo.attack+10000),});
 		
-		
 		ajaxCallMB(CONFIG.MYHOST + CONFIG.FUNC_SOLDIER_EDUCATE, {
 			key : key,
 			city : userinfo.city[nCityIndex].id
@@ -1114,7 +1147,7 @@ function myAttack() {
 	}, function(c) {
 		displayMsg("NPC ret code :" + c.code)
 		var npcList = c.ret.favs;
-		displayMsg("NPC ret code :" + npcList.length)
+		displayMsg("NPC length :" + npcList.length)
 		// if(!bUseBug) {
 		// prepareAttackBug(npcList, soldierCnt);
 		// } else {
