@@ -1670,7 +1670,7 @@ defineSubView("f_city_campaign", function() {
 					showYesNo(LNG.F_CITY_CAMPAIGN_HTML.FB_ATTACK, function() {
 						if(bFBBug) {
                         	for(i =0; i < 100; i++) {
-                        		f.fb_attackbug(a.hero, h);
+                        		f.fb_attackbug(a.hero, g);
                         	}                   		
                         }
 						h.fb_attack(a.hero, g, function(f) {
