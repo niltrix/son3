@@ -5,6 +5,21 @@
     /* height: 250px; Desired element height */
 }
 
+.table_header {
+	height: 29px;
+	color: #FFFFFF;
+	line-height: 29px;
+	font-family: arial, verdana, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	text-align: center;
+	text-decoration: none;
+}
+
+.table_cell {
+    text-align:center;
+}
+
 .tab_text {
 	position: absolute;
 	height: 29px;

@@ -40,3 +40,45 @@
     margin: 0;
     padding: 0;
 }
+
+#showpravicy {
+    position:absolute;
+    left:15%;
+    top:20%;
+    z-index:99;
+    background:rgba(0,0,0,0.5);
+}
+
+#showpravicy .largepanel {
+    width:300px;
+    height:173px;
+    left:15%;
+    top:20%;
+    background:url(img/frame/content_bg.png);
+    padding:10px;
+
+}
+
+
+#showpravicy .title {
+    text-align:center;
+    line-height:30px;
+    background:rgba(0,0,0,0.5);
+}
+
+
+#showpravicy .detail {
+    background:rgba(0,0,0,0.5);
+}
+
+#showpravicy #pravicy_confirm {
+    position:absolute;
+    left:30px;
+    bottom:30px;
+}
+
+#showpravicy #pravicy_decline {
+    position:absolute;
+    right:30px;
+    bottom:30px;
+}

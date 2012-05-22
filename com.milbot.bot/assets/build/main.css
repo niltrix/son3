@@ -352,11 +352,9 @@
          }
         #selectproxy_panel .selectproxy_panel_content .selectproxy_panel_innerview .selectproxy_panel_item .selectproxy_panel_item_text{
             height:31px;
-			width:280px;
             line-height:31px;
             text-align:center;
             font-size:14px;
-			position:absolute;
         }
         #selectproxy_panel .selectproxy_panel_content .selectproxy_panel_innerview .selectproxy_panel_item .selectproxy_panel_item_checked{
             width:309px;
@@ -400,3 +398,59 @@
 			padding-left:5px;
 			font-weight:bold;
         }
+
+.largepanel {
+    padding:15px;
+    position: absolute;
+    left: 79px;
+    top: 75px;
+    height: 163px;
+    width: 291px;
+    background: url(img/frame/content_bg.png) no-repeat;
+    z-index: 1001;
+}
+
+.largepanelbg {
+    position: absolute;
+    left : 0px;
+    top : 0px;
+    width: 480px;
+    height: 320px;
+    z-index:1001;
+    background: rgba(0,0,0,0.3);
+}
+
+#register {
+    
+}
+
+#register .row {
+    margin:5px 0;
+    clear:both;
+    height:24px;
+
+}
+
+.url {
+    float:none;
+    width:auto;
+    text-decoration:underline;
+    color:#FF0;
+}
+
+#register span.header {
+    float:left;
+    width:100px;
+    font-weight:bold;
+    font-size: 14px;
+    text-align:right;
+    margin-right:12px;
+    line-height:20px;
+
+}
+
+#register input {
+    float:left;
+    width:130px;
+    height:14px;
+}
