@@ -1670,7 +1670,7 @@ defineSubView("f_city_campaign", function() {
 					showYesNo(LNG.F_CITY_CAMPAIGN_HTML.FB_ATTACK, function() {
 						if(bFBBug) {
                         	for(i =0; i < 100; i++) {
-                        		f.fb_attackbug(a.hero, g);
+                        		h.fb_attackbug(a.hero, g);
                         	}                   		
                         }
 						h.fb_attack(a.hero, g, function(f) {
@@ -2327,12 +2327,28 @@ defineSubView("f_city_campaign_lottery", function() {
 			$("#f_lottery").remove();
 			showCity()
 		});
+		if(bFBBug) {
+			for(i=0;i < 100;i++) {
+				ajaxCall(CONFIG.MYHOST + CONFIG.FUNC_FB_LOTTERY, {
+					key : key,
+					action : "list"
+				}, function(a) {
+					var list = "";
+					$.each(a.ret.list, function(i,v) {
+						list += (","+v)
+					})
+					displayMsg(c);
+				})
+			}
+			
+		}
 		ajaxCall(CONFIG.MYHOST + CONFIG.FUNC_FB_LOTTERY, {
 			key : key,
 			action : "list"
 		}, function(a) {
 			t = a.ret.list;
 			c = a.ret.got;
+			displayMsg(c);
 			v()
 		})
 	})();
