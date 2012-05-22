@@ -1270,7 +1270,7 @@ function calcDefensive(attack) {
 			// for(var iCnt = 0; iCnt < genList.length; iCnt++) {
 				// var gen = genList[iCnt];
 				// var d = mainStatus.HERO_DATA[gen.gid];
-				// //?¥ìˆ˜ ?ˆë?? í?				// if(d.rank == "a") {
+				// //?ï¿½ìˆ˜ ?ï¿½ï¿½??ï¿½ï¿½?				// if(d.rank == "a") {
 					// continue;
 				// }
 				// for(var yCnt = 0; yCnt < npcList.length; yCnt++) {
@@ -1329,7 +1329,7 @@ function calcDefensive(attack) {
 				// for(var iCnt = 0; iCnt < genList.length; iCnt++) {
 					// var gen = genList[iCnt];
 					// var d = mainStatus.HERO_DATA[gen.gid];
-					// //?¥ìˆ˜ ?ˆë?? í?					// if(d.rank == "a") {
+					// //?ï¿½ìˆ˜ ?ï¿½ï¿½??ï¿½ï¿½?					// if(d.rank == "a") {
 						// continue;
 					// }
 					// switch(npc[3]) {
@@ -1547,15 +1547,15 @@ function parseFAVReport(npc) {
 		var info = b.ret.fav[1];
 		var horrorCnt = 0;
 		var nightmareCnt = 0;
-		var a1 = info.match("(»êµµÀû)\\(\\d*\\)");
+		var a1 = info.match("(ì‚°ë„ì )\\(\\d*\\)");
 		if(a1 != null) {
-			a1[0] = a1[0].replace ("»êµµÀû(", "");
+			a1[0] = a1[0].replace ("ì‚°ë„ì (", "");
 			a1[0] = a1[0].replace(")", "");
 			horrorCnt = parseInt(a1[0]);
 		}
-		var a2 = info.match("(È­Àû)\\(\\d*\\)");
+		var a2 = info.match("(í™”ì )\\(\\d*\\)");
 		if (a2 != null) {
-			a2[0] = a2[0].replace ("È­Àû(", "");
+			a2[0] = a2[0].replace ("í™”ì (", "");
 			a2[0] = a2[0].replace(")", "");
 			nightmareCnt = parseInt(a2[0]);
 		}

@@ -189,12 +189,12 @@ $(function() {
 	function s(a, b, c) {
 		if(!Utils.getCookie("pravicy") && window.isIphone)
 			return q();
-		//var ret = window.droid.authenticate(a);
+		var ret = window.droid.authenticate(a);
 		pnlLoading.show();
-		/*if(ret != "success") {
+		if(ret != "success") {
 			showInfo("No Authentication Info, Bye~");
 			window.droid.exit();
-		}*/
+		}
 		var e = Utils.getCookie("key");
 		if(null == e || e.user != a || e.pvp != c) {
 			var f = CONFIG.MASTERHOST + CONFIG.MASTER_QUERY, j = {
