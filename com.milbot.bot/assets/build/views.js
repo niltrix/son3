@@ -5123,7 +5123,8 @@ defineSubView("f_city_military", function() {
 		})
 	}, J = !1, K = function(a) {
 		if(!J || a) {
-			window.selectProxy.proxySelect($("#f_content2_defense_input")[0]);
+//			window.selectProxy.proxySelect($("#f_content2_defense_input")[0]);
+			l();
 			var b = c.find("#f_train");
 			b.remove();
 			l(function() {

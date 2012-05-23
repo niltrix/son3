@@ -1559,15 +1559,15 @@ function parseFAVReport(npc) {
 			a2[0] = a2[0].replace(")", "");
 			nightmareCnt = parseInt(a2[0]);
 		}
-//		if (horrorCnt > 1000) {
-//			g_npcindex++;
-//			if(g_npclist.length > g_npcindex) {
-//				setTimeout(parseFAVReport(g_npclist[g_npcindex]), 0);
-//			} else {
-//				setTimeout(myAttack(), 0);
-//			}
-//			return;
-//		}
+		if (horrorCnt > 1000) {
+			g_npcindex++;
+			if(g_npclist.length > g_npcindex) {
+				setTimeout(parseFAVReport(g_npclist[g_npcindex]), 0);
+			} else {
+				setTimeout(myAttack(), 0);
+			}
+			return;
+		}
 		var powerinfo = calcRobberPower(horrorCnt, nightmareCnt, npc[3]);
 		var enemyInfo = {
 			id : npc[0],
