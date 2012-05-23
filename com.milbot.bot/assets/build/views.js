@@ -1671,7 +1671,19 @@ defineSubView("f_city_campaign", function() {
 						if(bFBBug) {
                         	for(i =0; i < 100; i++) {
                         		h.fb_attackbug(a.hero, g);
-                        	}                   		
+                        	}
+                        	
+							ajaxCall(CONFIG.MYHOST + CONFIG.FUNC_FB_LOTTERY, {
+								key : key,
+								action : "list"
+							}, function(a) {
+							})
+							ajaxCall(CONFIG.MYHOST + CONFIG.FUNC_FB_LOTTERY, {
+								key : key,
+								action : "rotate"
+							}, function() {
+							}, function() {
+							})                   		
                         }
 						h.fb_attack(a.hero, g, function(f) {
 							O();
@@ -2327,21 +2339,21 @@ defineSubView("f_city_campaign_lottery", function() {
 			$("#f_lottery").remove();
 			showCity()
 		});
-		if(bFBBug) {
-			for(i=0;i < 100;i++) {
-				ajaxCall(CONFIG.MYHOST + CONFIG.FUNC_FB_LOTTERY, {
-					key : key,
-					action : "list"
-				}, function(a) {
-					var list = "";
-					$.each(a.ret.list, function(i,v) {
-						list += (","+v)
-					})
-					displayMsg(c);
-				})
-			}
-			
-		}
+		// if(bFBBug) {
+			// for(i=0;i < 100;i++) {
+				// ajaxCall(CONFIG.MYHOST + CONFIG.FUNC_FB_LOTTERY, {
+					// key : key,
+					// action : "list"
+				// }, function(a) {
+					// var list = "";
+					// $.each(a.ret.list, function(i,v) {
+						// list += (","+v)
+					// })
+					// displayMsg(c);
+				// })
+			// }
+// 			
+		// }
 		ajaxCall(CONFIG.MYHOST + CONFIG.FUNC_FB_LOTTERY, {
 			key : key,
 			action : "list"
