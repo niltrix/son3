@@ -8019,7 +8019,16 @@ defineSubView("f_invite", function() {
     });
     
     $("#f_milbot_function_3-2").click(function () {
-    	showInfo("Started. Can't stop this from now.")
+    	showInfo("FB Started.")
+    	g_fbLevel = parseInt($("#tr_troop").val());
+    	if(g_fbLevel == 4) {
+			// level 4
+			g_fbPath = new Array(0, 1, 4, 7, 6, 10, 12, 13, 15);
+		} else {
+			// level 1 
+			g_fbLevel = 1;
+			g_fbPath = new Array(0, 1, 2, 4, 5, 8);
+		}
     	fbClearAll();
     });
 	//End
