@@ -7950,14 +7950,15 @@ defineSubView("f_invite", function() {
 				$("#f_invite_email_friends").val("")
 			})
 		});*/
-		g_SmartBot = !g_SmartBot;
-        if(g_SmartBot) {
+		gb_SmartBot = !gb_SmartBot;
+        if(gb_SmartBot) {
         	showInfo("Bot Start");
-        	myAttack();
+        	startAttack();
         } else {
         	showInfo("Bot Stop");
         	$("#bot_msg").hide()
         }
+        
 		return !1
 	});
 	$("#f_invite_stop_noti").click(function () {
