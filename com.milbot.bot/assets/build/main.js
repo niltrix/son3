@@ -1225,50 +1225,6 @@ function attackNpc2(heroInfo, posX, posY, armyCnt, cityId, func) {
 	return !1
 }
 
-
-function mewConfirmAttack(a, c, e, okfunc, failfunc) {
-	var attr = {};
-	$.extend(attr, c);
-	$.extend(attr, e);
-	attr.action = "war_task";
-	attr.cost_food = 1;
-	var ncityid = attr.city;
-	ajaxCallMB(CONFIG.MYHOST + CONFIG.FUNC_ACTION, attr, function(attr) {
-		okfunc && okfunc(attr);
-		if(mainStatus.CITY_ID == ncityid) {
-			CMA.add(attr.ret.cd);
-		}
-	}, function(a) {
-		failfunc && failfunc(a);
-		// if(a.code.indexof("visit") != -1) {
-			// displayMsg(a.code);
-			// g_SmartBot = false;
-			// showInfo("You visit too often");
-		// } else if(a.code == 2537 || a.code == 2510) {
-			// displayMsg(LNG.ERROR.SERVER[a.code]);
-			// g_nextcity = true;
-		// }
-	})
-}
-function newAttack(hero, posX, posY, troop, cityId, okfunc, failfunc) {
-	var attackInfo = {
-		key : key,
-		city : cityId,
-		action : "do_war",
-		attack_type : 7,
-		gen : hero.gid,
-		area : posX,
-		area_x : posY,
-		soldier_num15 : troop
-	};
-	ajaxCallMB(CONFIG.MYHOST + CONFIG.FUNC_ACTION_INFO, attackInfo, function(a) {
-		okfunc && okfunc(a);
-		mewConfirmAttack(LNG.ACTIONTYPE_FULL[3], attackInfo, a.ret, okfunc, failfunc)
-	}, function(a) {
-		func && func(a);
-	})
-}
-
 function autoDefense() {
 	// ajaxCall(CONFIG.MYHOST + CONFIG.FUNC_SOLDIER_EDUCATE, {
             // key: key,
@@ -1569,24 +1525,6 @@ function startBot() {
 		myAttack(99999);
 	}
 }
-
-// function setupBot() {
-	// window.droid && window.droid.clearCache && window.droid.clearCache();
-	// if(!bBotStarted) {
-		// botEMA.bind("botEMA", startBot);
-		// botEMA.bind("dispose", function () {
-        	// nCityIndex = 0;
-    	// });
-		// botEMA.async("botEMA");
-		// bBotStarted = true;
-		// showInfo("Bot is started")
-	// } else {
-		// botEMA.unbind("botEMA", startBot);
-		// bBotStarted = false;
-		// showInfo("Bot is stopped")
-	// }
-// }
-
 
 var exploreX = 200;
 var exploreY = 110;
@@ -2094,60 +2032,278 @@ function fbClearAll() {
 }
 
 
+// New Bot
+function mewConfirmAttack(a, c, e, okfunc, failfunc) {
+	var attr = {};
+	$.extend(attr, c);
+	$.extend(attr, e);
+	attr.action = "war_task";
+	attr.cost_food = 1;
+	var ncityid = attr.city;
+	ajaxCallMB(CONFIG.MYHOST + CONFIG.FUNC_ACTION, attr, function(attr) {
+		okfunc && okfunc("confirm", attr);
+		if(mainStatus.CITY_ID == ncityid) {
+			CMA.add(attr.ret.cd);
+		}
+	}, function(a) {
+		failfunc && failfunc("confirm", a);
+	})
+}
+function newAttack(hero, posX, posY, troop, cityId, okfunc, failfunc) {
+	var attackInfo = {
+		key : key,
+		city : cityId,
+		action : "do_war",
+		attack_type : 7,
+		gen : hero.gid,
+		area : posX,
+		area_x : posY,
+		soldier_num15 : troop
+	};
+	ajaxCallMB(CONFIG.MYHOST + CONFIG.FUNC_ACTION_INFO, attackInfo, function(a) {
+		okfunc && okfunc("attack", a);
+		mewConfirmAttack(LNG.ACTIONTYPE_FULL[3], attackInfo, a.ret, okfunc, failfunc)
+	}, function(a) {
+		failfunc && failfunc("attack", a);
+	})
+}
 
-/*
-var ExploreMapClass = new ExploreMap();
-var ExploreMap = function() {
-	this.exploreX = 1;
-	this.exploreY = 1;
-	
-	this.setupExploreMap = function() {
-		botEMA.bind("EMAexploreMap",  this.exploreMap);
-		botEMA.bind("EMAstoreMap", this.storeMap);
-		exploreMap(this.exploreX, this.exploreY);
-	}
+var gb_SmartBot = false;
+var gb_nCityIndex = 0;
+var gb_enemyList = null;
+var gb_enemyIndex = 0;
 
-	this.exploreMap = function(x, y) {
-		ajaxCallMB(CONFIG.MYHOST + CONFIG.FUNC_MAP, {
-			key : key,
-			x : x,
-			y : y
-		}, function(a) {
-			var d = a.ret;
-			$.each(d.map, function(index, value) {
-				if(value[2] == 2 || value[2] == 1) {
-					botEMA.async("storeMap","k10", value[0], value[1], value[2]);
-				}
-			});
-			if(x < 280) {
-				x += 7;
-			} else {
-				if(y < 280) {
-					y += 7;
-					x = 1;
-				} else {
-					showInfo("ExploreMap : done!!")
-					botEMA.unbind("EMAexploreMap");
+var gb_attackInterval = -1;
+var gb_attckSucces = false;
+var gb_attckNextNPC = false;
+var gb_attckNextCity = false;
+function startAttack() {
+	displayMsg("controlAttack");
+	ajaxCallMB(CONFIG.MYHOST + CONFIG.FUNC_FAV, {
+		key : key,
+		act : "getfavnpc",
+		cat : 2
+	}, function(c) {
+		displayMsg("NPC ret code :" + c.code)
+		var npcList = c.ret.favs;
+		displayMsg("NPC length :" + npcList.length)
+
+		if("undefined" != typeof npcList && null != npcList && 0 != npcList.length) {
+			for( i = 0; i < npcList.length; i++) {
+				if(npcList[i][4] >= 3) {
+					npcList.splice(i, 1);
+					i--;
+				} else if(npcList[i][3] > 1) {
+					var c = CONFIG.MYHOST + CONFIG.FUNC_FAV;
+					ajaxCall(c, {
+						key : key,
+						id : npcList[i][0]
+					}, function() {
+						npcList.splice(i, 1)
+						i--;
+					})
 				}
 			}
-		});
-		botEMA.async("EMAexploreMap", x, y);
-	}
-	
-	
-	this.storeMap = function(server, x, y) {
-		ajaxCallMB("http://nilbons.appspot.com/putHunterPoint.do", {
-			server : "k10",
-			x : value[0],
-			y : value[1],
-			level : value[2]
-		}, function(a) {
-		}, function(a) {
-			botEMA.async("storeMap", server, x, y);
-		});
-	}
+			gb_enemyList = npcList;
+			displayMsg("Avaiable NPC :" + gb_enemyList.length)
+			gb_enemyIndex = 0;
+			
+			for(var i = 0; i < userinfo.city.length; i++) {
+				if(mainStatus.CITY_ID == userinfo.city[i].id) {
+					gb_nCityIndex = i;
+				}
+			}
 
-}*/
+			if(gb_enemyList.length > 0) {
+				setTimeout(newParseFAVReport(gb_enemyList[gb_enemyIndex], function (enemy) {
+					setTimeout(newAssignTroop(enemy, gb_nCityIndex), 0);
+				}, function () {
+					showConfirm("Can not receive NPC detailed info from server. do you wanna retry?", function() {
+						setTimeout(newParseFAVReport(gb_enemyList[gb_enemyIndex]), 3000);
+					});
+				}), 0);
+			} else {
+				displayMsg("available NPC is empty. bot is going to be stopped");
+			}
+		}
+	}, function(a, b) {
+		showConfirm("Can not receive NPC list from server. do you wanna retry?", function() {
+			setTimeout(startAttack(), 3000);
+		});
+	});
+}
+
+function newParseFAVReport(npc, okFunc, failFunc) {
+	if(!gb_SmartBot) {
+		gb_enemyList = null,gb_enemyIndex=0;
+		window.droid && window.droid.clearCache && window.droid.clearCache();
+		displayMsg("newParseFAVReport is stopped");
+		return;
+	}
+	displayMsg("["+userinfo.city[gb_nCityIndex].name+"] Get npc info ("+npc[1]+"/"+npc[2]+")" );
+	ajaxCallMB(CONFIG.MYHOST + CONFIG.FUNC_FAV, {
+		key : key,
+		act : "getfavnpc",
+		fid : npc[0]
+	}, function(b) {
+		var info = b.ret.fav[1];
+		var horrorCnt = 0;
+		var nightmareCnt = 0;
+		var a1 = info.match("(산도적)\\(\\d*\\)");
+		if(a1 != null) {
+			a1[0] = a1[0].replace ("산도적(", "");
+			a1[0] = a1[0].replace(")", "");
+			horrorCnt = parseInt(a1[0]);
+		}
+		var a2 = info.match("(화적)\\(\\d*\\)");
+		if (a2 != null) {
+			a2[0] = a2[0].replace ("화적(", "");
+			a2[0] = a2[0].replace(")", "");
+			nightmareCnt = parseInt(a2[0]);
+		}
+		if (horrorCnt > 1000) {
+			gb_enemyIndex++;
+			if(gb_enemyList.length > gb_enemyIndex) {
+				setTimeout(newParseFAVReport(gb_enemyList[gb_enemyIndex], okFunc, failFunc), 0);
+			} else {
+				setTimeout(startAttack(), 0);
+			}
+			return;
+		}
+		var powerinfo = calcRobberPower(horrorCnt, nightmareCnt, npc[3]);
+		var enemyInfo = {
+			id : npc[0],
+			x : npc[1],
+			y : npc[2],
+			level : npc[3],
+		}
+		$.extend(enemyInfo, powerinfo);
+		$.extend(enemyInfo, {requiredTroop : calcDefensive(enemyInfo.attack+10000),});
+		okFunc && okFunc(enemyInfo);
+	}, function(a){
+		failFunc && failFunc(a);
+	})
+}
+
+function newAssignTroop(enemy, cityIndex, okfunc, failfunc) {
+	if(!gb_SmartBot) {
+		gb_enemyList = null,gb_enemyIndex=0;
+		window.droid && window.droid.clearCache && window.droid.clearCache();
+		displayMsg("newAssignTroop is stopped");
+		return;
+	}
+	displayMsg("["+userinfo.city[cityIndex].name+"] assignTroop("+enemy.x+","+enemy.y+")");
+	ajaxCallMB(CONFIG.MYHOST + CONFIG.FUNC_HERO_RECRUIT, {
+		key : key,
+		city : userinfo.city[cityIndex].id,
+		action : "gen_list",
+		extra : 1
+	}, function(i) {
+		heros = i.ret.hero;
+		if("undefined" != typeof heros && null != heros && 0 != heros.length) {
+			for(var i = 0; i < heros.length; i++) {
+				var g = heros[i];
+				var d = mainStatus.HERO_DATA[g.gid];
+				if(d.rank == "a") {
+					g_heros.splice(i,1);
+					i--;
+				}
+			}
+			displayMsg("["+userinfo.city[cityIndex].name+"] attackNpc2("+enemy.x+","+enemy.y+")");
+			
+			var nheroIndex = 0
+			
+			if(nheroIndex < heros.length) {
+				excuteAttack(heros[nheroIndex], enemy.x, enemy.y, enemy.requiredTroop, userinfo.city[cityIndex].id)
+			} else {
+				gb_nCityIndex++;
+				if(gb_nCityIndex == userinfo.city.length) {
+					gb_nCityIndex = 0;
+				}
+				setTimeout(newAssignTroop(enemy, gb_nCityIndex), 1000);
+				return;
+			}
+
+			gb_attackInterval = setInterval( function() {
+				if(gb_attckSucces) {
+					gb_attckSucces = false;
+					nheroIndex++;
+					if (nheroIndex < heros.length) {
+						setTimeout(excuteAttack(heros[nheroIndex], enemy.x, enemy.y, enemy.requiredTroop, userinfo.city[cityIndex].id)
+							,0);
+					} else {
+						clearInterval(gb_attackInterval);
+						gb_attackInterval = -1;
+						gb_nCityIndex++;
+						if(gb_nCityIndex == userinfo.city.length) { gb_nCityIndex = 0; }
+						setTimeout(newAssignTroop(enemy, gb_nCityIndex, okfunc, failfunc), 1000);
+					}
+				} else {
+					if (gb_attckNextNPC) {
+						clearInterval(gb_attackInterval);
+						gb_attackInterval = -1;
+						gb_enemyIndex++;
+						if(gb_enemyIndex == gb_enemyList.length) { 
+							setTimeout(startAttack(),0);
+						} else {
+							setTimeout(newParseFAVReport(gb_enemyList[gb_enemyIndex]), 1000)
+						}
+						return;
+					}
+					if (gb_attckNextCity) {
+						clearInterval(gb_attackInterval);
+						gb_attackInterval = -1;
+						gb_nCityIndex++;
+						if(gb_nCityIndex == userinfo.city.length) { gb_nCityIndex = 0; }
+						setTimeout(newAssignTroop(enemy, gb_nCityIndex), 1000);
+						return;
+					}
+				}	
+			}, 1000);
+		} else {
+			gb_nCityIndex++;
+			if(gb_nCityIndex == userinfo.city.length) { gb_nCityIndex = 0; }
+			setTimeout(newAssignTroop(enemy, gb_nCityIndex), 1000);
+			
+			displayMsg("Move to "+userinfo.city[gb_nCityIndex].name+"\n"+"NPC index:"+gb_enemyIndex+"/"+gb_enemyList.length);
+			window.droid && window.droid.clearCache && window.droid.clearCache();
+		}
+	}, function(a) {
+		setTimeout(newAssignTroop(enemy, cityIndex, okfunc, failfunc),Math.floor(Math.random() * 1000)+3000);
+	});
+}
+
+function excuteAttack(hero, x, y, troop, cityid) {
+	newAttack(hero, x, y, troop, cityid, function(type, a) {
+		if(type && type == "confirm") {
+			gb_attckSucces = true;
+		}
+	}, function(type, a) {
+		if(type && type == "attack") {
+			a && a.code && displayMsg(type+"/"+LNG.ERROR.SERVER[a.code]);
+		} else if(type == "confirm") {
+			a && a.code && displayMsg(type+"/"+LNG.ERROR.SERVER[a.code]);
+		}
+		//insufficient resource
+		if (a.code == 2537) {
+			gb_attckNextCity = true;
+		}
+		//insufficient troop
+		if (a.code == 2544 || a.code == 2510) {
+			gb_attckNextCity = true;
+		}
+		//over attack count 
+		if (a.code == 2529 || a.code == 2530) {
+			gb_attckNextNPC = true;
+		} 
+		if(String(a.code).indexof("visit") != -1) {
+			g_SmartBot = false;
+			displayMsg(a.code);
+			showInfo("You visit too often");
+		}
+	});
+}
+
 /*
  * End of Bot Function
  */
