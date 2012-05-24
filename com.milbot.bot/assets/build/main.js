@@ -1157,7 +1157,7 @@ function parsingwarinfo(info) {
 	})):{};
 }
 
-function confirmAttackNpc(a, c, e) {		
+function confirmAttackNpc(a, c, e, func) {		
 		var attr = {};
 		$.extend(attr, c);
 		$.extend(attr, e);
@@ -1170,8 +1170,13 @@ function confirmAttackNpc(a, c, e) {
 				CMA.add(attr.ret.cd);
 			}
 		}, function (a) {
-			displayMsg(LNG.ERROR.SERVER[a.code]);
-			if(a.code == 2537 || a.code == 2510) {
+			func && func(a);
+			if (a.code.indexof("visit") != -1) {
+				displayMsg(a.code);
+				g_SmartBot = false;
+				showInfo("You visit too often");
+			} else if(a.code == 2537 || a.code == 2510) {
+				displayMsg(LNG.ERROR.SERVER[a.code]);
 				g_nextcity = true;
 			}
 		})	
@@ -1212,7 +1217,7 @@ function attackNpc2(heroInfo, posX, posY, armyCnt, cityId, func) {
 	};
 
 	ajaxCallMB(CONFIG.MYHOST + CONFIG.FUNC_ACTION_INFO, attackInfo, function(a) {
-		confirmAttackNpc(LNG.ACTIONTYPE_FULL[3], attackInfo, a.ret)
+		confirmAttackNpc(LNG.ACTIONTYPE_FULL[3], attackInfo, a.ret, func)
 	}, function(a) {
 		func(a);
 	})

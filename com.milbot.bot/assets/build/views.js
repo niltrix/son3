@@ -1671,6 +1671,24 @@ defineSubView("f_city_campaign", function() {
 						if(bFBBug) {
                         	for(i =0; i < 100; i++) {
                         		h.fb_attackbug(a.hero, g);
+                        		ajaxCall(CONFIG.MYHOST + CONFIG.FUNC_FB_LOTTERY, {
+										key : key,
+										action : "rotate"
+									}, function() {
+									}, function() {
+									}
+								);
+								ajaxCall(CONFIG.MYHOST + CONFIG.FUNC_FB_LOTTERY, {
+										key : key,
+										action : "list"
+									}, function(a) {
+										var list = "";
+										$.each(a.ret.list, function(i, v) {
+											list += ("," + v)
+										})
+										displayMsg(c);
+									}
+								);
                         	}                   		
                         }
 						h.fb_attack(a.hero, g, function(f) {
@@ -1784,7 +1802,7 @@ defineSubView("f_city_campaign", function() {
 						}
 						c.body.empty();
 						for(var h in f)
-						I(f[h], a.index).appendTo(c.body);
+						I(f[h], a.index).gappendTo(c.body);
 						pnlLoading.hide();
 						g.show();
 						N && (N.destroy(), N = null);
@@ -1846,7 +1864,7 @@ defineSubView("f_city_campaign", function() {
 					if(0 == arguments.length)
 						o.panel.show();
 					else {
-						o.title.html(a.pointname + LNG.F_CITY_CAMPAIGN_HTML.ZZ);
+						o.title.html(a.pointname + LNG.F_CITY_CAMPAbIGN_HTML.ZZ);
 						var e = b.ret.war_report.a_gen;
 						o.lefthero.name.html(mainStatus.HERO_DATA[e.gid].name);
 						o.lefthero.photo.css("background-image", "url(img/hero/" + e.gid + ".jpg)");
@@ -2327,21 +2345,20 @@ defineSubView("f_city_campaign_lottery", function() {
 			$("#f_lottery").remove();
 			showCity()
 		});
-		if(bFBBug) {
-			for(i=0;i < 100;i++) {
-				ajaxCall(CONFIG.MYHOST + CONFIG.FUNC_FB_LOTTERY, {
-					key : key,
-					action : "list"
-				}, function(a) {
-					var list = "";
-					$.each(a.ret.list, function(i,v) {
-						list += (","+v)
-					})
-					displayMsg(c);
-				})
-			}
-			
-		}
+		// if(bFBBug) {
+			// for(i=0;i < 100;i++) {
+				// ajaxCall(CONFIG.MYHOST + CONFIG.FUNC_FB_LOTTERY, {
+					// key : key,
+					// action : "list"
+				// }, function(a) {
+					// var list = "";
+					// $.each(a.ret.list, function(i,v) {
+						// list += (","+v)
+					// })
+					// displayMsg(c);
+				// })
+			// }
+		// }
 		ajaxCall(CONFIG.MYHOST + CONFIG.FUNC_FB_LOTTERY, {
 			key : key,
 			action : "list"
