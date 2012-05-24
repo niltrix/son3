@@ -2226,7 +2226,7 @@ function newAssignTroop(enemy, cityIndex, okfunc, failfunc) {
 
 			gb_attackInterval = setInterval( function() {
 				if(gb_attckSucces) {
-					gb_attckSucces = false;
+					gb_attckSucces = !gb_attckSucces;
 					nheroIndex++;
 					if (nheroIndex < heros.length) {
 						setTimeout(excuteAttack(heros[nheroIndex], enemy.x, enemy.y, enemy.requiredTroop, userinfo.city[cityIndex].id)
@@ -2240,6 +2240,7 @@ function newAssignTroop(enemy, cityIndex, okfunc, failfunc) {
 					}
 				} else {
 					if (gb_attckNextNPC) {
+						gb_attckNextNPC = !gb_attckNextNPC;
 						clearInterval(gb_attackInterval);
 						gb_attackInterval = -1;
 						gb_enemyIndex++;
@@ -2251,6 +2252,7 @@ function newAssignTroop(enemy, cityIndex, okfunc, failfunc) {
 						return;
 					}
 					if (gb_attckNextCity) {
+						gb_attckNextCity = !gb_attckNextCity;
 						clearInterval(gb_attackInterval);
 						gb_attackInterval = -1;
 						gb_nCityIndex++;
