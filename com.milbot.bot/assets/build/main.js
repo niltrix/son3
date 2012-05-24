@@ -2179,9 +2179,11 @@ function newParseFAVReport(npc, okFunc, failFunc) {
 		}
 		$.extend(enemyInfo, powerinfo);
 		$.extend(enemyInfo, {requiredTroop : calcDefensive(enemyInfo.attack+10000),});
-		okFunc && okFunc(enemyInfo);
+		
+		"undefined" != typeof okFunc && null != okFunc && okFunc(enemyInfo) 
+
 	}, function(a){
-		failFunc && failFunc(a);
+		"undefined" != typeof failFunc && null != failFunc && okFunc(failFunc)
 	})
 }
 
@@ -2241,10 +2243,13 @@ function newAssignTroop(enemy, cityIndex, okfunc, failfunc) {
 				} else {
 					if (gb_attckNextNPC) {
 						gb_attckNextNPC = !gb_attckNextNPC;
+						
 						clearInterval(gb_attackInterval);
 						gb_attackInterval = -1;
+						
 						gb_enemyIndex++;
 						if(gb_enemyIndex == gb_enemyList.length) { 
+							gb_enemyIndex = 0;
 							setTimeout(startAttack(),0);
 						} else {
 							setTimeout(newParseFAVReport(gb_enemyList[gb_enemyIndex]), 1000)
