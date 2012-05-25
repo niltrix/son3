@@ -4459,7 +4459,7 @@ defineSubView("f_city_hero", function() {
 								if (0 < c.ret.win) {
 									(a.w++, a.tw++);
 									//fightResult = "[" + a.ex + "/" + a.te + "/"+a.id+"/"+d.id+"]";
-									fightResult = "["+c.id+"/"+g.id+"]";
+									fightResult = "["+a.id+"/"+d.id+"]";
 								} else {
 									(a.w = 0, a.tl++);
 									var fightResult = "";
