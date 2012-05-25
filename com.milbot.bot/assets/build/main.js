@@ -2311,9 +2311,9 @@ function excuteAttack(hero, x, y, troop, cityid) {
 	newAttack(hero, x, y, troop, cityid, function(type, a) {
 		if(type && type == "confirm") {
 			gb_attckSucces = true;
-			displayMsg("confirm : Success Attack");
+			displayMsg(userinfo.city[gb_nCityIndex].name+"-confirm : Success Attack");
 		} else {
-			displayMsg("attack : Success Attack");
+			displayMsg(userinfo.city[gb_nCityIndex].name+"-attack : Success Attack");
 		}
 	}, function(type, a) {
 		if(type && type == "attack") {
