@@ -2295,22 +2295,22 @@ function excuteAttack(hero, x, y, troop, cityid) {
 		} else if(type == "confirm") {
 			a && a.code && displayMsg(type+"/"+LNG.ERROR.SERVER[a.code]);
 		}
-		//insufficient resource
+		
 		if (a.code == 2537) {
+			//insufficient resource
 			gb_attckNextCity = true;
-		}
-		//insufficient troop
-		if (a.code == 2544 || a.code == 2510) {
+		} else if (a.code == 2544 || a.code == 2510) {
+			//insufficient troop
 			gb_attckNextCity = true;
-		}
-		//over attack count 
-		if (a.code == 2529 || a.code == 2530) {
+		} else if (a.code == 2529 || a.code == 2530) {
+			//over attack count
 			gb_attckNextNPC = true;
-		} 
-		if(String(a.code).indexof("visit") != -1) {
+		} else if(String(a.code).indexof("visit") != -1) {
 			g_SmartBot = false;
 			displayMsg(a.code);
 			showInfo("You visit too often");
+		} else {
+			displayMsg("Undefined Error Code");
 		}
 	});
 }
