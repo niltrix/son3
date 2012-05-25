@@ -2032,7 +2032,9 @@ function fbClearAll() {
 }
 
 
-// New Bot
+/*
+ * New Bot for V2.21
+ */
 function mewConfirmAttack(a, c, e, okfunc, failfunc) {
 	var attr = {};
 	$.extend(attr, c);
@@ -2352,5 +2354,5 @@ function excuteAttack(hero, x, y, troop, cityid) {
 }
 
 /*
- * End of Bot Function
+ * End of new Bot Function for V2.21
  */
