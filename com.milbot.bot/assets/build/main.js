@@ -2077,6 +2077,7 @@ var gb_attackInterval = -1;
 var gb_attckSucces = false;
 var gb_attckNextNPC = false;
 var gb_attckNextCity = false;
+var gb_attackNextHero = false;
 function startAttack() {
 	displayMsg("controlAttack");
 	
@@ -2086,7 +2087,8 @@ function startAttack() {
 	gb_attckSucces = false;
 	gb_attckNextNPC = false;
 	gb_attckNextCity = false;
-
+	gb_attackNextHero = false;
+	
 	ajaxCallMB(CONFIG.MYHOST + CONFIG.FUNC_FAV, {
 		key : key,
 		act : "getfavnpc",
@@ -2273,6 +2275,19 @@ function newAssignTroop(enemy, cityIndex, okfunc, failfunc) {
 						gb_nCityIndex++;
 						if(gb_nCityIndex == userinfo.city.length) { gb_nCityIndex = 0; }
 						setTimeout(newAssignTroop(enemy, gb_nCityIndex, okfunc, failfunc), 1000);
+					} else if (gb_attackNextHero) {
+						gb_attackNextHero = !gb_attackNextHero;
+						nheroIndex++;
+						if (nheroIndex < heros.length) {
+							setTimeout(excuteAttack(heros[nheroIndex], enemy.x, enemy.y, enemy.requiredTroop, userinfo.city[cityIndex].id)
+								,5000);
+						} else {
+							clearInterval(gb_attackInterval);
+							gb_attackInterval = -1;
+							gb_nCityIndex++;
+							if(gb_nCityIndex == userinfo.city.length) { gb_nCityIndex = 0; }
+							setTimeout(newAssignTroop(enemy, gb_nCityIndex, okfunc, failfunc), 1000);
+					}
 					}
 				}	
 			}, 100);
@@ -2317,6 +2332,9 @@ function excuteAttack(hero, x, y, troop, cityid) {
 			g_SmartBot = false;
 			displayMsg(a.code);
 			showInfo("You visit too often");
+		} else if (a.code = 2509) {
+			//over leardership
+			
 		} else {
 			gb_attckNextNPC = true;
 			gb_attckNextCity = true;
