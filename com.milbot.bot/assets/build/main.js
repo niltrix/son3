@@ -2270,7 +2270,7 @@ function newAssignTroop(enemy, cityIndex, okfunc, failfunc) {
 						return;
 					}
 				}	
-			}, 1000);
+			}, 5000);
 		} else {
 			gb_nCityIndex++;
 			if(gb_nCityIndex == userinfo.city.length) { gb_nCityIndex = 0; }
