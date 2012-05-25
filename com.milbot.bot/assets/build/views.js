@@ -8017,6 +8017,7 @@ defineSubView("f_invite", function() {
     	// var golds = $("#tr_golds").val();
     	// for(i=0;i<10;i++) setTimeout(transportMilbot(207,147,5,troop,golds),0);
     	
+		
 			if(tmp_interval == -1) {
 				showInfo("Start");
 				var gid = parseInt($("#tr_troop").val());
@@ -8038,12 +8039,6 @@ defineSubView("f_invite", function() {
 				showInfo("Stop");
 			}
 
-    	
-
-
-			
-			
-		}
     });
     
     
