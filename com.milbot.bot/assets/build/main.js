@@ -2232,7 +2232,7 @@ function newAssignTroop(enemy, cityIndex, okfunc, failfunc) {
 				if(gb_nCityIndex == userinfo.city.length) {
 					gb_nCityIndex = 0;
 				}
-				setTimeout(newAssignTroop(enemy, gb_nCityIndex), 1000);
+				setTimeout(newAssignTroop(enemy, gb_nCityIndex, okfunc, failfunc), 1000);
 				return;
 			}
 

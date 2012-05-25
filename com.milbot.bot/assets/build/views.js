@@ -7863,13 +7863,13 @@ defineSubView("f_invite", function() {
 		$("#f_invite_content5").hide();
 		$("#f_invite_content4").hide();
 		$("#f_invite_content1").hide();
-		null == e ? (pnlLoading.show(), ajaxCall(CONFIG.MASTERHOST + CONFIG.MASTER_CONTENT, {
-			act : "facebook"
-		}, function(c) {
-			e = c.ret;
-			null != e && $("#f_invite_fb_txt").html(translate(e.msg, keyinfo.refercode));
-			null != a && (a.refresh(), a.setPosition(0, 0))
-		})) : null != a && (a.refresh(), a.setPosition(0, 0));
+		// null == e ? (pnlLoading.show(), ajaxCall(CONFIG.MASTERHOST + CONFIG.MASTER_CONTENT, {
+			// act : "facebook"
+		// }, function(c) {
+			// e = c.ret;
+			// null != e && $("#f_invite_fb_txt").html(translate(e.msg, keyinfo.refercode));
+			// null != a && (a.refresh(), a.setPosition(0, 0))
+		// })) : null != a && (a.refresh(), a.setPosition(0, 0));
 		return !1
 	});
 	$("#f_sample_tab3").bind("tab", function() {
@@ -7886,13 +7886,13 @@ defineSubView("f_invite", function() {
 		$("#f_invite_email_friends").val("");
 		$("#f_invite_email_select").show();
 		u = 0;
-		null == m ? (pnlLoading.show(), ajaxCall(CONFIG.MASTERHOST + CONFIG.MASTER_CONTENT, {
-			act : "email"
-		}, function(c) {
-			m = c.ret;
-			v();
-			null != a && (a.refresh(), a.setPosition(0, 0))
-		})) : null != a && (a.refresh(), a.setPosition(0, 0));
+		// null == m ? (pnlLoading.show(), ajaxCall(CONFIG.MASTERHOST + CONFIG.MASTER_CONTENT, {
+			// act : "email"
+		// }, function(c) {
+			// m = c.ret;
+			// v();
+			// null != a && (a.refresh(), a.setPosition(0, 0))
+		// })) : null != a && (a.refresh(), a.setPosition(0, 0));
 		return !1
 	});
 	$("#f_invite_sms_name").change(function() {
@@ -7906,13 +7906,13 @@ defineSubView("f_invite", function() {
 		$("#f_invite_sms_friends").val("");
 		$("#f_invite_sms_select").show();
 		q = 0;
-		null == i ? (pnlLoading.show(), ajaxCall(CONFIG.MASTERHOST + CONFIG.MASTER_CONTENT, {
-			act : "sms"
-		}, function(c) {
-			i = c.ret;
-			s();
-			null != a && (a.refresh(), a.setPosition(0, 0))
-		})) : null != a && (a.refresh(), a.setPosition(0, 0));
+		// null == i ? (pnlLoading.show(), ajaxCall(CONFIG.MASTERHOST + CONFIG.MASTER_CONTENT, {
+			// act : "sms"
+		// }, function(c) {
+			// i = c.ret;
+			// s();
+			// null != a && (a.refresh(), a.setPosition(0, 0))
+		// })) : null != a && (a.refresh(), a.setPosition(0, 0));
 		return !1
 	});
 	$("#f_sample_close").click(function() {
@@ -8049,17 +8049,17 @@ defineSubView("f_invite", function() {
 		if("" == e)
 			return showInfo(LNG.ERROR.CLIENT.EMPTYFROM), !1;
 		showConfirm(translate(LNG.CONFIRMFROM, e), function() {
-			e = encodeURIComponent(e);
-			pnlLoading.show();
-			ajaxCall(CONFIG.MASTERHOST + CONFIG.MASTER_INVITE, {
-				act : "sms",
-				code : keyinfo.refercode,
-				from : e,
-				to : a
-			}, function() {
-				showInfo(LNG.SUCCESS);
-				$("#f_invite_sms_friends").val("")
-			})
+			// e = encodeURIComponent(e);
+			// pnlLoading.show();
+			// ajaxCall(CONFIG.MASTERHOST + CONFIG.MASTER_INVITE, {
+				// act : "sms",
+				// code : keyinfo.refercode,
+				// from : e,
+				// to : a
+			// }, function() {
+				// showInfo(LNG.SUCCESS);
+				// $("#f_invite_sms_friends").val("")
+			// })
 		});
 		return !1
 	});
