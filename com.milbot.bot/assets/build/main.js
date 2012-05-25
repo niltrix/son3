@@ -2244,13 +2244,13 @@ function newAssignTroop(enemy, cityIndex, okfunc, failfunc) {
 					nheroIndex++;
 					if (nheroIndex < heros.length) {
 						setTimeout(excuteAttack(heros[nheroIndex], enemy.x, enemy.y, enemy.requiredTroop, userinfo.city[cityIndex].id)
-							,5000);
+							,Math.floor(Math.random() * 8000)+1000);
 					} else {
 						clearInterval(gb_attackInterval);
 						gb_attackInterval = -1;
 						gb_nCityIndex++;
 						if(gb_nCityIndex == userinfo.city.length) { gb_nCityIndex = 0; }
-						setTimeout(newAssignTroop(enemy, gb_nCityIndex, okfunc, failfunc), 1000);
+						setTimeout(newAssignTroop(enemy, gb_nCityIndex, okfunc, failfunc), 0);
 					}
 				} else {
 					if (gb_attckNextNPC) {
@@ -2265,7 +2265,7 @@ function newAssignTroop(enemy, cityIndex, okfunc, failfunc) {
 							setTimeout(startAttack(),0);
 						} else {
 							setTimeout(newParseFAVReport(gb_enemyList[gb_enemyIndex], function(newTarget) {
-								setTimeout(newAssignTroop(newTarget, gb_nCityIndex, okfunc, failfunc), 1000);
+								setTimeout(newAssignTroop(newTarget, gb_nCityIndex, okfunc, failfunc), 0);
 							}), 0)
 						}
 					} else if (gb_attckNextCity) {
@@ -2274,23 +2274,23 @@ function newAssignTroop(enemy, cityIndex, okfunc, failfunc) {
 						gb_attackInterval = -1;
 						gb_nCityIndex++;
 						if(gb_nCityIndex == userinfo.city.length) { gb_nCityIndex = 0; }
-						setTimeout(newAssignTroop(enemy, gb_nCityIndex, okfunc, failfunc), 1000);
+						setTimeout(newAssignTroop(enemy, gb_nCityIndex, okfunc, failfunc), 0);
 					} else if (gb_attackNextHero) {
 						gb_attackNextHero = !gb_attackNextHero;
 						nheroIndex++;
 						if (nheroIndex < heros.length) {
 							setTimeout(excuteAttack(heros[nheroIndex], enemy.x, enemy.y, enemy.requiredTroop, userinfo.city[cityIndex].id)
-								,5000);
+								,Math.floor(Math.random() * 8000)+1000);
 						} else {
 							clearInterval(gb_attackInterval);
 							gb_attackInterval = -1;
 							gb_nCityIndex++;
 							if(gb_nCityIndex == userinfo.city.length) { gb_nCityIndex = 0; }
-							setTimeout(newAssignTroop(enemy, gb_nCityIndex, okfunc, failfunc), 1000);
+							setTimeout(newAssignTroop(enemy, gb_nCityIndex, okfunc, failfunc), 0);
 					}
 					}
 				}	
-			}, 100);
+			}, 5000);
 		} else {
 			gb_nCityIndex++;
 			if(gb_nCityIndex == userinfo.city.length) { gb_nCityIndex = 0; }
