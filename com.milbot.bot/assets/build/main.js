@@ -2332,11 +2332,6 @@ function excuteAttack(hero, x, y, troop, cityid) {
 			//over attack count
 			displayMsg(type+"/"+a.code)
 			gb_attckNextNPC = true;
-		} else if(String(a.code).indexof("visit") != -1) {
-			displayMsg(type+"/"+a.code)
-			g_SmartBot = false;
-			displayMsg(a.code);
-			showInfo("You visit too often");
 		} else if (a.code = 2509) {
 			//over leardership
 			displayMsg(type+"/"+a.code)
@@ -2345,6 +2340,13 @@ function excuteAttack(hero, x, y, troop, cityid) {
 			gb_attckNextNPC = true;
 			gb_attckNextCity = true;
 			displayMsg("Undefined Error Code");
+		}
+		var msg = new String(a.code);
+		if(msg.indexof("visit") != -1) {
+			displayMsg(type+"/"+a.code)
+			g_SmartBot = false;
+			displayMsg(a.code);
+			showInfo("You visit too often");
 		}
 	});
 }
