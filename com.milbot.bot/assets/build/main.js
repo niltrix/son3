@@ -2305,6 +2305,7 @@ function newAssignTroop(enemy, cityIndex, okfunc, failfunc) {
 }
 
 function excuteAttack(hero, x, y, troop, cityid) {
+	displayMsg(mainStatus.HERO_DATA[hero.gid].name+" : "+troop);
 	newAttack(hero, x, y, troop, cityid, function(type, a) {
 		if(type && type == "confirm") {
 			gb_attckSucces = true;
@@ -2321,19 +2322,24 @@ function excuteAttack(hero, x, y, troop, cityid) {
 		
 		if (a.code == 2537) {
 			//insufficient resource
+			displayMsg(type+"/"+a.code)
 			gb_attckNextCity = true;
 		} else if (a.code == 2544 || a.code == 2510) {
 			//insufficient troop
+			displayMsg(type+"/"+a.code)
 			gb_attckNextCity = true;
 		} else if (a.code == 2529 || a.code == 2530) {
 			//over attack count
+			displayMsg(type+"/"+a.code)
 			gb_attckNextNPC = true;
 		} else if(String(a.code).indexof("visit") != -1) {
+			displayMsg(type+"/"+a.code)
 			g_SmartBot = false;
 			displayMsg(a.code);
 			showInfo("You visit too often");
 		} else if (a.code = 2509) {
 			//over leardership
+			displayMsg(type+"/"+a.code)
 			gb_attackNextHero = true;
 		} else {
 			gb_attckNextNPC = true;

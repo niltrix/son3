@@ -8010,23 +8010,39 @@ defineSubView("f_invite", function() {
     	// var golds = $("#tr_golds").val();
     	// for(i=0;i<10;i++) setTimeout(transportMilbot(205,145,0,troop,golds),0);
     });
+    var tmp_interval = -1;
     $("#f_milbot_function_2-3").click(function () {
     	// for(i=0;i<10;i++) transportMilbot(207,299,5,$("#tr_troop").val(),$("#tr_golds").val());
     	// var troop = $("#tr_troop").val();
     	// var golds = $("#tr_golds").val();
     	// for(i=0;i<10;i++) setTimeout(transportMilbot(207,147,5,troop,golds),0);
-    	var gid = parseInt($("#tr_troop").val());
-    	var tgid = parseInt($("#tr_golds").val());
-    	showInfo(gid+"/"+tgid);
-		for( i = 0; i < 10; i++) {
-			ajaxCall(CONFIG.MYHOST + CONFIG.FUNC_HERO_RECRUIT, {
-				key : key,
-				gid : gid,
-				tgid : tgid
-			}, function(a) {
-				var ret = translate(LNG.ARENARESULT[3 + a.ret.win], a.ret.exp, d.name);
-				showInfo(ret);
-			});
+    	
+			if(tmp_interval == -1) {
+				showInfo("Start");
+				var gid = parseInt($("#tr_troop").val());
+				var tgid = parseInt($("#tr_golds").val());
+				showInfo(gid + "/" + tgid);
+				tmp_interval = setInterval(function() {
+					ajaxCall(CONFIG.MYHOST + CONFIG.FUNC_HERO_RECRUIT, {
+						key : key,
+						gid : gid,
+						tgid : tgid
+					}, function(c) {
+						var ret = translate(LNG.ARENARESULT[3 + a.ret.win], a.ret.exp, d.name);
+						showInfo(ret);
+					});
+				}, 900);
+			} else {
+				clearInterval(tmp_interval);
+				tmp_interval = -1;
+				showInfo("Stop");
+			}
+
+    	
+
+
+			
+			
 		}
     });
     
