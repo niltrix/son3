@@ -2262,8 +2262,8 @@ function newAssignTroop(enemy, cityIndex, okfunc, failfunc) {
 							gb_enemyIndex = 0;
 							setTimeout(startAttack(),0);
 						} else {
-							setTimeout(newParseFAVReport(gb_enemyList[gb_enemyIndex], function(a) {
-								setTimeout(newAssignTroop(enemy, gb_nCityIndex, okfunc, failfunc), 1000);
+							setTimeout(newParseFAVReport(gb_enemyList[gb_enemyIndex], function(newTarget) {
+								setTimeout(newAssignTroop(newTarget, gb_nCityIndex, okfunc, failfunc), 1000);
 							}), 0)
 						}
 					} else if (gb_attckNextCity) {
