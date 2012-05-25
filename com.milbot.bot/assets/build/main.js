@@ -2334,7 +2334,7 @@ function excuteAttack(hero, x, y, troop, cityid) {
 			showInfo("You visit too often");
 		} else if (a.code = 2509) {
 			//over leardership
-			
+			gb_attackNextHero = true;
 		} else {
 			gb_attckNextNPC = true;
 			gb_attckNextCity = true;
