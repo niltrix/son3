@@ -2079,6 +2079,14 @@ var gb_attckNextNPC = false;
 var gb_attckNextCity = false;
 function startAttack() {
 	displayMsg("controlAttack");
+	
+	gb_enemyList = null;
+	gb_enemyIndex = 0;
+	gb_attackInterval = -1;
+	gb_attckSucces = false;
+	gb_attckNextNPC = false;
+	gb_attckNextCity = false;
+
 	ajaxCallMB(CONFIG.MYHOST + CONFIG.FUNC_FAV, {
 		key : key,
 		act : "getfavnpc",
@@ -2185,7 +2193,7 @@ function newParseFAVReport(npc, okFunc, failFunc) {
 		"undefined" != typeof okFunc && null != okFunc && okFunc(enemyInfo) 
 
 	}, function(a){
-		"undefined" != typeof failFunc && null != failFunc && okFunc(failFunc)
+		"undefined" != typeof failFunc && null != failFunc && failFunc(a)
 	})
 }
 
@@ -2240,7 +2248,7 @@ function newAssignTroop(enemy, cityIndex, okfunc, failfunc) {
 						gb_attackInterval = -1;
 						gb_nCityIndex++;
 						if(gb_nCityIndex == userinfo.city.length) { gb_nCityIndex = 0; }
-						setTimeout(newAssignTroop(enemy, gb_nCityIndex, okfunc, failfunc), 2000);
+						setTimeout(newAssignTroop(enemy, gb_nCityIndex, okfunc, failfunc), 0);
 					}
 				} else {
 					if (gb_attckNextNPC) {
@@ -2256,18 +2264,15 @@ function newAssignTroop(enemy, cityIndex, okfunc, failfunc) {
 						} else {
 							setTimeout(newParseFAVReport(gb_enemyList[gb_enemyIndex], function(a) {
 								setTimeout(newAssignTroop(enemy, gb_nCityIndex, okfunc, failfunc), 0);
-							}), 2000)
+							}), 0)
 						}
-						return;
-					}
-					if (gb_attckNextCity) {
+					} else if (gb_attckNextCity) {
 						gb_attckNextCity = !gb_attckNextCity;
 						clearInterval(gb_attackInterval);
 						gb_attackInterval = -1;
 						gb_nCityIndex++;
 						if(gb_nCityIndex == userinfo.city.length) { gb_nCityIndex = 0; }
-						setTimeout(newAssignTroop(enemy, gb_nCityIndex, okfunc, failfunc), 2000);
-						return;
+						setTimeout(newAssignTroop(enemy, gb_nCityIndex, okfunc, failfunc), 0);
 					}
 				}	
 			}, 5000);
@@ -2288,6 +2293,7 @@ function excuteAttack(hero, x, y, troop, cityid) {
 	newAttack(hero, x, y, troop, cityid, function(type, a) {
 		if(type && type == "confirm") {
 			gb_attckSucces = true;
+			displayMsg("Success Attack");
 		}
 	}, function(type, a) {
 		if(type && type == "attack") {
