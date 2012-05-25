@@ -3813,7 +3813,8 @@ defineSubView("f_city_hero", function() {
                                                 var fightResult;
                                                 if (0 < a.ret.win) {
                                                 	(c.w++, c.tw++);
-                                                	fightResult = "[" + c.ex + "/" + c.te + "/"+c.id+"/"+g.id+"]";
+                                                	//fightResult = "[" + c.ex + "/" + c.te + "/"+c.id+"/"+g.id+"]";
+                                                	fightResult = "["+c.id+"/"+g.id+"]";
                                                 } else {
                                                 	(c.w = 0, c.tl++);
                                                 	fightResult = "";
@@ -4457,7 +4458,8 @@ defineSubView("f_city_hero", function() {
 								var fightResult;
 								if (0 < c.ret.win) {
 									(a.w++, a.tw++);
-									fightResult = "[" + a.ex + "/" + a.te + "/"+a.id+"/"+d.id+"]";
+									//fightResult = "[" + a.ex + "/" + a.te + "/"+a.id+"/"+d.id+"]";
+									fightResult = "["+c.id+"/"+g.id+"]";
 								} else {
 									(a.w = 0, a.tl++);
 									var fightResult = "";
