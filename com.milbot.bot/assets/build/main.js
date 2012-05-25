@@ -2255,7 +2255,7 @@ function newAssignTroop(enemy, cityIndex, okfunc, failfunc) {
 							setTimeout(startAttack(),0);
 						} else {
 							setTimeout(newParseFAVReport(gb_enemyList[gb_enemyIndex], function(a) {
-								setTimeout(newAssignTroop(enemy, gb_nCityIndex), 0);
+								setTimeout(newAssignTroop(enemy, gb_nCityIndex, okfunc, failfunc), 0);
 							}), 2000)
 						}
 						return;
@@ -2266,7 +2266,7 @@ function newAssignTroop(enemy, cityIndex, okfunc, failfunc) {
 						gb_attackInterval = -1;
 						gb_nCityIndex++;
 						if(gb_nCityIndex == userinfo.city.length) { gb_nCityIndex = 0; }
-						setTimeout(newAssignTroop(enemy, gb_nCityIndex), 2000);
+						setTimeout(newAssignTroop(enemy, gb_nCityIndex, okfunc, failfunc), 2000);
 						return;
 					}
 				}	
@@ -2274,7 +2274,7 @@ function newAssignTroop(enemy, cityIndex, okfunc, failfunc) {
 		} else {
 			gb_nCityIndex++;
 			if(gb_nCityIndex == userinfo.city.length) { gb_nCityIndex = 0; }
-			setTimeout(newAssignTroop(enemy, gb_nCityIndex), 2000);
+			setTimeout(newAssignTroop(enemy, gb_nCityIndex, okfunc, failfunc), 2000);
 			
 			displayMsg("Move to "+userinfo.city[gb_nCityIndex].name+"\n"+"NPC index:"+gb_enemyIndex+"/"+gb_enemyList.length);
 			window.droid && window.droid.clearCache && window.droid.clearCache();
