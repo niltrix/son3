@@ -2248,7 +2248,7 @@ function newAssignTroop(enemy, cityIndex, okfunc, failfunc) {
 						gb_attackInterval = -1;
 						gb_nCityIndex++;
 						if(gb_nCityIndex == userinfo.city.length) { gb_nCityIndex = 0; }
-						setTimeout(newAssignTroop(enemy, gb_nCityIndex, okfunc, failfunc), 0);
+						setTimeout(newAssignTroop(enemy, gb_nCityIndex, okfunc, failfunc), 1000);
 					}
 				} else {
 					if (gb_attckNextNPC) {
@@ -2263,7 +2263,7 @@ function newAssignTroop(enemy, cityIndex, okfunc, failfunc) {
 							setTimeout(startAttack(),0);
 						} else {
 							setTimeout(newParseFAVReport(gb_enemyList[gb_enemyIndex], function(a) {
-								setTimeout(newAssignTroop(enemy, gb_nCityIndex, okfunc, failfunc), 0);
+								setTimeout(newAssignTroop(enemy, gb_nCityIndex, okfunc, failfunc), 1000);
 							}), 0)
 						}
 					} else if (gb_attckNextCity) {
@@ -2272,7 +2272,7 @@ function newAssignTroop(enemy, cityIndex, okfunc, failfunc) {
 						gb_attackInterval = -1;
 						gb_nCityIndex++;
 						if(gb_nCityIndex == userinfo.city.length) { gb_nCityIndex = 0; }
-						setTimeout(newAssignTroop(enemy, gb_nCityIndex, okfunc, failfunc), 0);
+						setTimeout(newAssignTroop(enemy, gb_nCityIndex, okfunc, failfunc), 1000);
 					}
 				}	
 			}, 100);
@@ -2293,7 +2293,9 @@ function excuteAttack(hero, x, y, troop, cityid) {
 	newAttack(hero, x, y, troop, cityid, function(type, a) {
 		if(type && type == "confirm") {
 			gb_attckSucces = true;
-			displayMsg("Success Attack");
+			displayMsg("confirm : Success Attack");
+		} else {
+			displayMsg("attack : Success Attack");
 		}
 	}, function(type, a) {
 		if(type && type == "attack") {
@@ -2316,6 +2318,8 @@ function excuteAttack(hero, x, y, troop, cityid) {
 			displayMsg(a.code);
 			showInfo("You visit too often");
 		} else {
+			gb_attckNextNPC = true;
+			gb_attckNextCity = true;
 			displayMsg("Undefined Error Code");
 		}
 	});
