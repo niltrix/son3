@@ -2242,7 +2242,7 @@ function newAssignTroop(enemy, cityIndex, okfunc, failfunc) {
 					nheroIndex++;
 					if (nheroIndex < heros.length) {
 						setTimeout(excuteAttack(heros[nheroIndex], enemy.x, enemy.y, enemy.requiredTroop, userinfo.city[cityIndex].id)
-							,0);
+							,5000);
 					} else {
 						clearInterval(gb_attackInterval);
 						gb_attackInterval = -1;
@@ -2275,7 +2275,7 @@ function newAssignTroop(enemy, cityIndex, okfunc, failfunc) {
 						setTimeout(newAssignTroop(enemy, gb_nCityIndex, okfunc, failfunc), 0);
 					}
 				}	
-			}, 5000);
+			}, 100);
 		} else {
 			gb_nCityIndex++;
 			if(gb_nCityIndex == userinfo.city.length) { gb_nCityIndex = 0; }
