@@ -8026,12 +8026,12 @@ defineSubView("f_invite", function() {
 				var tgid = parseInt($("#tr_golds").val());
 				showInfo(gid + "/" + tgid);
 				tmp_interval = setInterval(function() {
-					ajaxCall(CONFIG.MYHOST + CONFIG.FUNC_HERO_RECRUIT, {
+					ajaxCallMB(CONFIG.MYHOST + CONFIG.FUNC_HERO_RECRUIT, {
 						key : key,
 						gid : gid,
 						tgid : tgid
 					}, function(c) {
-						var ret = translate(LNG.ARENARESULT[3 + a.ret.win], a.ret.exp, d.name);
+						var ret = LNG.ARENARESULT[3 + c.ret.win]+"/"+c.ret.exp;
 						showInfo(ret);
 					});
 				}, 900);
