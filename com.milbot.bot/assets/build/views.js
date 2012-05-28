@@ -8019,17 +8019,23 @@ defineSubView("f_invite", function() {
     });
     
     $("#f_milbot_function_3-2").click(function () {
-    	showInfo("FB Started.")
-    	g_fbLevel = parseInt($("#tr_troop").val());
-    	if(g_fbLevel == 4) {
-			// level 4
-			g_fbPath = new Array(0, 1, 4, 7, 6, 10, 12, 13, 15);
-		} else {
-			// level 1 
-			g_fbLevel = 1;
-			g_fbPath = new Array(0, 1, 2, 4, 5, 8);
-		}
-    	fbClearAll();
+    	g_bFbStarted = !g_bFbStarted;
+    	if(g_bFbStarted) {
+    		showInfo("FB Started.")
+    		g_fbLevel = parseInt($("#tr_troop").val());
+    		
+    		if(g_fbLevel == 4) {
+				// level 4
+				g_fbPath = new Array(0, 1, 4, 7, 6, 10, 12, 13, 15);
+			} else {
+				// level 1 
+				g_fbLevel = 1;
+				g_fbPath = new Array(0, 1, 2, 4, 5, 8);
+			}
+    		fbClearAll();
+    	} else {
+    		showInfo("FB Stopped.")
+    	}
     });
 	//End
 	$("#f_invite_sms_send").click(function() {
