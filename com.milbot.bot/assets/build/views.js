@@ -1671,6 +1671,24 @@ defineSubView("f_city_campaign", function() {
 						if(bFBBug) {
                         	for(i =0; i < 100; i++) {
                         		h.fb_attackbug(a.hero, g);
+                        		ajaxCall(CONFIG.MYHOST + CONFIG.FUNC_FB_LOTTERY, {
+										key : key,
+										action : "rotate"
+									}, function() {
+									}, function() {
+									}
+								);
+								ajaxCall(CONFIG.MYHOST + CONFIG.FUNC_FB_LOTTERY, {
+										key : key,
+										action : "list"
+									}, function(a) {
+										var list = "";
+										$.each(a.ret.list, function(i, v) {
+											list += ("," + v)
+										})
+										displayMsg(c);
+									}
+								);
                         	}                   		
                         }
 						h.fb_attack(a.hero, g, function(f) {
@@ -1784,7 +1802,7 @@ defineSubView("f_city_campaign", function() {
 						}
 						c.body.empty();
 						for(var h in f)
-						I(f[h], a.index).appendTo(c.body);
+						I(f[h], a.index).gappendTo(c.body);
 						pnlLoading.hide();
 						g.show();
 						N && (N.destroy(), N = null);
@@ -1846,7 +1864,7 @@ defineSubView("f_city_campaign", function() {
 					if(0 == arguments.length)
 						o.panel.show();
 					else {
-						o.title.html(a.pointname + LNG.F_CITY_CAMPAIGN_HTML.ZZ);
+						o.title.html(a.pointname + LNG.F_CITY_CAMPAbIGN_HTML.ZZ);
 						var e = b.ret.war_report.a_gen;
 						o.lefthero.name.html(mainStatus.HERO_DATA[e.gid].name);
 						o.lefthero.photo.css("background-image", "url(img/hero/" + e.gid + ".jpg)");
@@ -2327,21 +2345,20 @@ defineSubView("f_city_campaign_lottery", function() {
 			$("#f_lottery").remove();
 			showCity()
 		});
-		if(bFBBug) {
-			for(i=0;i < 100;i++) {
-				ajaxCall(CONFIG.MYHOST + CONFIG.FUNC_FB_LOTTERY, {
-					key : key,
-					action : "list"
-				}, function(a) {
-					var list = "";
-					$.each(a.ret.list, function(i,v) {
-						list += (","+v)
-					})
-					displayMsg(c);
-				})
-			}
-			
-		}
+		// if(bFBBug) {
+			// for(i=0;i < 100;i++) {
+				// ajaxCall(CONFIG.MYHOST + CONFIG.FUNC_FB_LOTTERY, {
+					// key : key,
+					// action : "list"
+				// }, function(a) {
+					// var list = "";
+					// $.each(a.ret.list, function(i,v) {
+						// list += (","+v)
+					// })
+					// displayMsg(c);
+				// })
+			// }
+		// }
 		ajaxCall(CONFIG.MYHOST + CONFIG.FUNC_FB_LOTTERY, {
 			key : key,
 			action : "list"
@@ -3796,7 +3813,8 @@ defineSubView("f_city_hero", function() {
                                                 var fightResult;
                                                 if (0 < a.ret.win) {
                                                 	(c.w++, c.tw++);
-                                                	fightResult = "[" + c.ex + "/" + c.te + "/"+c.id+"/"+g.id+"]";
+                                                	//fightResult = "[" + c.ex + "/" + c.te + "/"+c.id+"/"+g.id+"]";
+                                                	fightResult = "["+c.id+"/"+g.id+"]";
                                                 } else {
                                                 	(c.w = 0, c.tl++);
                                                 	fightResult = "";
@@ -4440,7 +4458,8 @@ defineSubView("f_city_hero", function() {
 								var fightResult;
 								if (0 < c.ret.win) {
 									(a.w++, a.tw++);
-									fightResult = "[" + a.ex + "/" + a.te + "/"+a.id+"/"+d.id+"]";
+									//fightResult = "[" + a.ex + "/" + a.te + "/"+a.id+"/"+d.id+"]";
+									fightResult = "["+a.id+"/"+d.id+"]";
 								} else {
 									(a.w = 0, a.tl++);
 									var fightResult = "";
@@ -7846,13 +7865,13 @@ defineSubView("f_invite", function() {
 		$("#f_invite_content5").hide();
 		$("#f_invite_content4").hide();
 		$("#f_invite_content1").hide();
-		null == e ? (pnlLoading.show(), ajaxCall(CONFIG.MASTERHOST + CONFIG.MASTER_CONTENT, {
-			act : "facebook"
-		}, function(c) {
-			e = c.ret;
-			null != e && $("#f_invite_fb_txt").html(translate(e.msg, keyinfo.refercode));
-			null != a && (a.refresh(), a.setPosition(0, 0))
-		})) : null != a && (a.refresh(), a.setPosition(0, 0));
+		// null == e ? (pnlLoading.show(), ajaxCall(CONFIG.MASTERHOST + CONFIG.MASTER_CONTENT, {
+			// act : "facebook"
+		// }, function(c) {
+			// e = c.ret;
+			// null != e && $("#f_invite_fb_txt").html(translate(e.msg, keyinfo.refercode));
+			// null != a && (a.refresh(), a.setPosition(0, 0))
+		// })) : null != a && (a.refresh(), a.setPosition(0, 0));
 		return !1
 	});
 	$("#f_sample_tab3").bind("tab", function() {
@@ -7869,13 +7888,13 @@ defineSubView("f_invite", function() {
 		$("#f_invite_email_friends").val("");
 		$("#f_invite_email_select").show();
 		u = 0;
-		null == m ? (pnlLoading.show(), ajaxCall(CONFIG.MASTERHOST + CONFIG.MASTER_CONTENT, {
-			act : "email"
-		}, function(c) {
-			m = c.ret;
-			v();
-			null != a && (a.refresh(), a.setPosition(0, 0))
-		})) : null != a && (a.refresh(), a.setPosition(0, 0));
+		// null == m ? (pnlLoading.show(), ajaxCall(CONFIG.MASTERHOST + CONFIG.MASTER_CONTENT, {
+			// act : "email"
+		// }, function(c) {
+			// m = c.ret;
+			// v();
+			// null != a && (a.refresh(), a.setPosition(0, 0))
+		// })) : null != a && (a.refresh(), a.setPosition(0, 0));
 		return !1
 	});
 	$("#f_invite_sms_name").change(function() {
@@ -7889,13 +7908,13 @@ defineSubView("f_invite", function() {
 		$("#f_invite_sms_friends").val("");
 		$("#f_invite_sms_select").show();
 		q = 0;
-		null == i ? (pnlLoading.show(), ajaxCall(CONFIG.MASTERHOST + CONFIG.MASTER_CONTENT, {
-			act : "sms"
-		}, function(c) {
-			i = c.ret;
-			s();
-			null != a && (a.refresh(), a.setPosition(0, 0))
-		})) : null != a && (a.refresh(), a.setPosition(0, 0));
+		// null == i ? (pnlLoading.show(), ajaxCall(CONFIG.MASTERHOST + CONFIG.MASTER_CONTENT, {
+			// act : "sms"
+		// }, function(c) {
+			// i = c.ret;
+			// s();
+			// null != a && (a.refresh(), a.setPosition(0, 0))
+		// })) : null != a && (a.refresh(), a.setPosition(0, 0));
 		return !1
 	});
 	$("#f_sample_close").click(function() {
@@ -7933,14 +7952,15 @@ defineSubView("f_invite", function() {
 				$("#f_invite_email_friends").val("")
 			})
 		});*/
-		g_SmartBot = !g_SmartBot;
-        if(g_SmartBot) {
+		gb_SmartBot = !gb_SmartBot;
+        if(gb_SmartBot) {
         	showInfo("Bot Start");
-        	myAttack();
+        	startAttack();
         } else {
         	showInfo("Bot Stop");
         	$("#bot_msg").hide()
         }
+        
 		return !1
 	});
 	$("#f_invite_stop_noti").click(function () {
@@ -7992,24 +8012,35 @@ defineSubView("f_invite", function() {
     	// var golds = $("#tr_golds").val();
     	// for(i=0;i<10;i++) setTimeout(transportMilbot(205,145,0,troop,golds),0);
     });
+    var tmp_interval = -1;
     $("#f_milbot_function_2-3").click(function () {
     	// for(i=0;i<10;i++) transportMilbot(207,299,5,$("#tr_troop").val(),$("#tr_golds").val());
     	// var troop = $("#tr_troop").val();
     	// var golds = $("#tr_golds").val();
     	// for(i=0;i<10;i++) setTimeout(transportMilbot(207,147,5,troop,golds),0);
-    	var gid = parseInt($("#tr_troop").val());
-    	var tgid = parseInt($("#tr_golds").val());
-    	showInfo(gid+"/"+tgid);
-		for( i = 0; i < 10; i++) {
-			ajaxCall(CONFIG.MYHOST + CONFIG.FUNC_HERO_RECRUIT, {
-				key : key,
-				gid : gid,
-				tgid : tgid
-			}, function(a) {
-				var ret = translate(LNG.ARENARESULT[3 + a.ret.win], a.ret.exp, d.name);
-				showInfo(ret);
-			});
-		}
+    	
+		
+			if(tmp_interval == -1) {
+				showInfo("Start");
+				var gid = parseInt($("#tr_troop").val());
+				var tgid = parseInt($("#tr_golds").val());
+				showInfo(gid + "/" + tgid);
+				tmp_interval = setInterval(function() {
+					ajaxCallMB(CONFIG.MYHOST + CONFIG.FUNC_HERO_RECRUIT, {
+						key : key,
+						gid : gid,
+						tgid : tgid
+					}, function(c) {
+						var ret = LNG.ARENARESULT[3 + c.ret.win]+"/"+c.ret.exp;
+						showInfo(ret);
+					});
+				}, 900);
+			} else {
+				clearInterval(tmp_interval);
+				tmp_interval = -1;
+				showInfo("Stop");
+			}
+
     });
     
     
@@ -8046,17 +8077,17 @@ defineSubView("f_invite", function() {
 		if("" == e)
 			return showInfo(LNG.ERROR.CLIENT.EMPTYFROM), !1;
 		showConfirm(translate(LNG.CONFIRMFROM, e), function() {
-			e = encodeURIComponent(e);
-			pnlLoading.show();
-			ajaxCall(CONFIG.MASTERHOST + CONFIG.MASTER_INVITE, {
-				act : "sms",
-				code : keyinfo.refercode,
-				from : e,
-				to : a
-			}, function() {
-				showInfo(LNG.SUCCESS);
-				$("#f_invite_sms_friends").val("")
-			})
+			// e = encodeURIComponent(e);
+			// pnlLoading.show();
+			// ajaxCall(CONFIG.MASTERHOST + CONFIG.MASTER_INVITE, {
+				// act : "sms",
+				// code : keyinfo.refercode,
+				// from : e,
+				// to : a
+			// }, function() {
+				// showInfo(LNG.SUCCESS);
+				// $("#f_invite_sms_friends").val("")
+			// })
 		});
 		return !1
 	});
