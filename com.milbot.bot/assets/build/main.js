@@ -1043,10 +1043,10 @@ var staticBuff = {
 	ALLY_ARMYDEF : 5,
 	TECH_WM : 20,
 	TECH_DM : 20,
-	TECH_SOD : 19,
-	TECH_SOA : 19,
-	TECH_CS : 18,
-	TECH_DS : 19,
+	TECH_SOD : 17,
+	TECH_SOA : 15,
+	TECH_CS : 16,
+	TECH_DS : 16,
 	_END : ""
 }
 
@@ -1394,6 +1394,7 @@ function parseFAVReport(npc) {
 			a2[0] = a2[0].replace(")", "");
 			nightmareCnt = parseInt(a2[0]);
 		}
+		/*
 		if (horrorCnt > 1000) {
 			g_npcindex++;
 			if(g_npclist.length > g_npcindex) {
@@ -1403,6 +1404,7 @@ function parseFAVReport(npc) {
 			}
 			return;
 		}
+		*/
 		var powerinfo = calcRobberPower(horrorCnt, nightmareCnt, npc[3]);
 		var enemyInfo = {
 			id : npc[0],
@@ -2238,6 +2240,7 @@ function newParseFAVReport(npc, okFunc, failFunc) {
 			a2[0] = a2[0].replace(")", "");
 			nightmareCnt = parseInt(a2[0]);
 		}
+		/*
 		if (horrorCnt > 1000) {
 			gb_enemyIndex++;
 			if(gb_enemyList.length > gb_enemyIndex) {
@@ -2247,6 +2250,7 @@ function newParseFAVReport(npc, okFunc, failFunc) {
 			}
 			return;
 		}
+		*/
 		var powerinfo = calcRobberPower(horrorCnt, nightmareCnt, npc[3]);
 		var enemyInfo = {
 			id : npc[0],
@@ -2284,7 +2288,8 @@ function newAssignTroop(enemy, cityIndex, okfunc, failfunc) {
 				var g = heros[i];
 				var d = mainStatus.HERO_DATA[g.gid];
 				if(d.rank == "a") {
-					g_heros.splice(i,1);
+					//g_heros.splice(i,1);
+					heros.splice(i,1);
 					i--;
 				}
 			}
