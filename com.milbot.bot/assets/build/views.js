@@ -2821,7 +2821,7 @@ defineSubView("f_city_center", function() {
 			action : "g_cd"
 		}, function(a) {
 			var b = !0;
-			if("" != a.ret && (0 < a.ret[0] && ($("#f_make1").find("#f_cd1 p").text(Utils.timeString2(a.ret[0])), $("#f_make2").find("#f_cd1 p").text(Utils.timeString2(a.ret[0])), $("#f_make1").find("#f_upgrade").hide(), $("#f_make2").find("#f_upgrade").hide(), b = !1), 0 < a.ret[1] ? ($("#f_content4_vacation_clock b").text(Utils.timeString2(a.ret[1])), $("#f_content4_vacation_clock").show(), $("#f_content4_vacation_do").hide(), 0 < a.ret[3] - 172800 && $("#f_content4_vacation_end").show()) : 0 < a.ret[2] && ($("#f_content4_vacation_cd p").text(Utils.timeString2(a.ret[2])), $("#f_content4_vacation_cd").show(), $("#f_content4_vacation_do").hide()), ispvp)) {
+			if("" != a.ret && (0 < a.ret[0] && ($("#f_make1").find("#f_cd1 p").text(Utils.timeString2(a.ret[0])), $("#f_make2").find("#f_cd1 p").text(Utils.timeString2(a.ret[0])), $("#f_make1").find("#f_upgrade").show(), $("#f_make2").find("#f_upgrade").show(), b = !1), 0 < a.ret[1] ? ($("#f_content4_vacation_clock b").text(Utils.timeString2(a.ret[1])), $("#f_content4_vacation_clock").show(), $("#f_content4_vacation_do").hide(), 0 < a.ret[3] - 172800 && $("#f_content4_vacation_end").show()) : 0 < a.ret[2] && ($("#f_content4_vacation_cd p").text(Utils.timeString2(a.ret[2])), $("#f_content4_vacation_cd").show(), $("#f_content4_vacation_do").hide()), ispvp)) {
 				var c = mainStatus.CITY_INFO;
 				c[25] = a.ret[4];
 				$("#f_content4_durab_point").text(c[25]);
