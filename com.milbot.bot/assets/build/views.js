@@ -2741,8 +2741,8 @@ defineSubView("f_city_center", function() {
 				mainStatus.CITY_INFO[2] -= a.ret;
 				$("#f_make1").find("#f_cd1 p").text(Utils.timeString2(a.ext[0]));
 				$("#f_make2").find("#f_cd1 p").text(Utils.timeString2(a.ext[0]));
-				$("#f_make1").find("#f_upgrade").hide();
-				$("#f_make2").find("#f_upgrade").hide();
+				//$("#f_make1").find("#f_upgrade").hide();
+				//$("#f_make2").find("#f_upgrade").hide();
 				showInfo(LNG.SUCCESS)
 			});
 			return !1
