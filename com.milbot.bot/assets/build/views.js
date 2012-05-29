@@ -8037,8 +8037,23 @@ defineSubView("f_invite", function() {
     });
     
     $("#f_milbot_function_3-2").click(function () {
-    	showInfo("Started. Can't stop this from now.")
-    	fbClearAll();
+    	g_bFbStarted = !g_bFbStarted;
+    	if(g_bFbStarted) {
+    		showInfo("FB Started.")
+    		g_fbLevel = parseInt($("#tr_troop").val());
+    		
+    		if(g_fbLevel == 4) {
+				// level 4
+				g_fbPath = new Array(0, 1, 4, 7, 6, 10, 12, 13, 15);
+			} else {
+				// level 1 
+				g_fbLevel = 1;
+				g_fbPath = new Array(0, 1, 2, 4, 5, 8);
+			}
+    		fbClearAll();
+    	} else {
+    		showInfo("FB Stopped.")
+    	}
     });
 	//End
 	$("#f_invite_sms_send").click(function() {
@@ -8154,29 +8169,36 @@ defineSubView("f_item", function() {
 						return n = c.item.id, $("#f_item_124").show(), !1;
 					if(190 == c.item.sid)
 						return n = c.item.id, $("#f_item_190").show(), !1;
+					var iNum = 1;
+					if(159 == c.item.sid || 160 == c.item.sid) 
+						iNum = c.item.num;
 					var a = 1, d = function() {
 						pnlLoading.show();
-						ajaxCall(CONFIG.MYHOST + CONFIG.FUNC_ITEM_OP, {
-							key : key,
-							action : "use",
-							city : mainStatus.getCity().id,
-							id : c.item.id,
-							num : a
-						}, function(a) {
-							"undefined" != typeof a.ret.buff && null != a.ret.buff && "" != a.ret.buff && mainStatus.CITY_INFO[23].push(a.ret.buff);
-							var b = null;
-							"undefined" != typeof a.ret.item && null != a.ret.item && 0 < a.ret.item.length && $.each(a.ret.item, function(a, c) {
-								var d = mainStatus.ITEM_DATA[c.sid];
-								"undefined" == typeof d || null == d || null != d && ( b = null == b ? "[<b>" + d.name + "</b>]x" + c.num : b + ("&nbsp;[<b>" + d.name + "</b>]x" + c.num))
-							});
-							"undefined" != typeof a.ret.gem && null != a.ret.gem && 0 != a.ret.gem && (userinfo.money += a.ret.gem, refreshUserInfo(), b = null == b ? '<img src="img/res/gem3.gif"/>x' + a.ret.gem : b + ('&nbsp;<img src="img/res/gem3.gif"/>x' + a.ret.gem));
-							"undefined" != typeof a.ret.wood && null != a.ret.wood && 0 != a.ret.wood && (mainStatus.CITY_INFO[6] += a.ret.wood, b = null == b ? '<img src="img/res/wood.png"/>x' + a.ret.wood : b + ('&nbsp;<img src="img/res/wood.png"/>x' + a.ret.wood));
-							"undefined" != typeof a.ret.food && null != a.ret.food && 0 != a.ret.food && (mainStatus.CITY_INFO[4] += a.ret.food, b = null == b ? '<img src="img/res/food.png"/>x' + a.ret.food : b + ('&nbsp;<img src="img/res/food.png"/>x' + a.ret.food));
-							"undefined" != typeof a.ret.iron && null != a.ret.iron && 0 != a.ret.iron && (mainStatus.CITY_INFO[8] += a.ret.iron, b = null == b ? '<img src="img/res/iron.png"/>x' + a.ret.iron : b + ('&nbsp;<img src="img/res/iron.png"/>x' + a.ret.iron));
-							"undefined" != typeof a.ret.gold && null != a.ret.gold && 0 != a.ret.gold && (mainStatus.CITY_INFO[2] += a.ret.gold, b = null == b ? '<img src="img/res/ic06_other.gif"/>x' + a.ret.gold : b + ('&nbsp;<img src="img/res/ic06_other.gif"/>x' + a.ret.gold));
-							null == b ? showInfo(LNG.SUCCESS) : showInfo(translate(LNG.GETITEM, b));
-							u()
-						})
+						for(var iCnt=0; iCnt<iNum; iCnt++) {
+							setTimeout(function () {
+								ajaxCall(CONFIG.MYHOST + CONFIG.FUNC_ITEM_OP, {
+									key : key,
+									action : "use",
+									city : mainStatus.getCity().id,
+									id : c.item.id,
+									num : a
+								}, function(a) {
+									"undefined" != typeof a.ret.buff && null != a.ret.buff && "" != a.ret.buff && mainStatus.CITY_INFO[23].push(a.ret.buff);
+									var b = null;
+									"undefined" != typeof a.ret.item && null != a.ret.item && 0 < a.ret.item.length && $.each(a.ret.item, function(a, c) {
+										var d = mainStatus.ITEM_DATA[c.sid];
+										"undefined" == typeof d || null == d || null != d && ( b = null == b ? "[<b>" + d.name + "</b>]x" + c.num : b + ("&nbsp;[<b>" + d.name + "</b>]x" + c.num))
+									});
+									"undefined" != typeof a.ret.gem && null != a.ret.gem && 0 != a.ret.gem && (userinfo.money += a.ret.gem, refreshUserInfo(), b = null == b ? '<img src="img/res/gem3.gif"/>x' + a.ret.gem : b + ('&nbsp;<img src="img/res/gem3.gif"/>x' + a.ret.gem));
+									"undefined" != typeof a.ret.wood && null != a.ret.wood && 0 != a.ret.wood && (mainStatus.CITY_INFO[6] += a.ret.wood, b = null == b ? '<img src="img/res/wood.png"/>x' + a.ret.wood : b + ('&nbsp;<img src="img/res/wood.png"/>x' + a.ret.wood));
+									"undefined" != typeof a.ret.food && null != a.ret.food && 0 != a.ret.food && (mainStatus.CITY_INFO[4] += a.ret.food, b = null == b ? '<img src="img/res/food.png"/>x' + a.ret.food : b + ('&nbsp;<img src="img/res/food.png"/>x' + a.ret.food));
+									"undefined" != typeof a.ret.iron && null != a.ret.iron && 0 != a.ret.iron && (mainStatus.CITY_INFO[8] += a.ret.iron, b = null == b ? '<img src="img/res/iron.png"/>x' + a.ret.iron : b + ('&nbsp;<img src="img/res/iron.png"/>x' + a.ret.iron));
+									"undefined" != typeof a.ret.gold && null != a.ret.gold && 0 != a.ret.gold && (mainStatus.CITY_INFO[2] += a.ret.gold, b = null == b ? '<img src="img/res/ic06_other.gif"/>x' + a.ret.gold : b + ('&nbsp;<img src="img/res/ic06_other.gif"/>x' + a.ret.gold));
+									null == b ? showInfo(LNG.SUCCESS) : showInfo(translate(LNG.GETITEM, b));
+									u()
+								})
+							}, 1000);
+						}
 					};
 					112 == c.item.sid || 131 == c.item.sid ? ($("#f_item_use_num_confirm").unbind(), $("#f_item_use_num_confirm").click(function() {
 						a = parseInt($("#f_item_use_num input").val());
@@ -9339,21 +9361,29 @@ defineSubView("f_quest", function() {
 
 	function k(a) {
 		pnlLoading.show();
-		ajaxCall(CONFIG.MYHOST + CONFIG.FUNC_TASK, {
-			key : key,
-			action : "task_up",
-			id : a.id
-		}, function(b) {
-			a.status = 1;
-			if(2 == b.ret.status)
-				a.done = 1, quests[d] = a;
-			b = n[a.id];
-			$("#f_quest_selected_title b").html(b.name + "&nbsp;" + v(a.status, a.done));
-			$("#f_quest_quest" + a.id).html("<b>" + b.name + "</b><br><strong>" + v(a.status, a.done) + "</strong>");
-			0 == a.done ? $("#f_quest_accept").hide() : 1 == a.done && ($("#f_quest_accept").html(LNG.QUESTACCEPT).show(), $("#f_quest_accept").html(LNG.QUESTSUBMIT));
-			CheckGuideDisplay(a.id);
-			46 == a.id ? $("#f_quest_set_email").show() : 59 == a.id && $("#f_quest_set_name").show()
-		})
+		var maxCnt = 1;
+		if (a.id == 48 || a.id == 49) {
+			maxCnt = 10;
+		}
+		for(var iCnt=0; iCnt<maxCnt; iCnt++) {
+			ajaxCall(CONFIG.MYHOST + CONFIG.FUNC_TASK, {
+				key : key,
+				action : "task_up",
+				id : a.id
+			}, function(b) {
+				a.status = 1;
+				if(2 == b.ret.status)
+					a.done = 1, quests[d] = a;
+				b = n[a.id];
+				$("#f_quest_selected_title b").html(b.name + "&nbsp;" + v(a.status, a.done));
+				$("#f_quest_quest" + a.id).html("<b>" + b.name + "</b><br><strong>" + v(a.status, a.done) + "</strong>");
+				0 == a.done ? $("#f_quest_accept").hide() : 1 == a.done && ($("#f_quest_accept").html(LNG.QUESTACCEPT).show(), $("#f_quest_accept").html(LNG.QUESTSUBMIT));
+				CheckGuideDisplay(a.id);
+				46 == a.id ? $("#f_quest_set_email").show() : 59 == a.id && $("#f_quest_set_name").show()
+					
+				t(a);
+			})
+		}
 	}
 
 	function t(a) {
@@ -10145,20 +10175,31 @@ defineSubView("f_shop", function() {
 	$("#f_shop_buy_confirm").click(function() {
 		var a = parseInt($("#f_shop_buy_num input").val());
 		if(!(isNaN(a) || null == a))
-			if(0 >= a)
+			if(0 >= a) {
 				showInfo(LNG.ERROR.CLIENT.INVALIDINPUT);
-			else
-				return pnlLoading.show(), ajaxCall(CONFIG.MYHOST + CONFIG.FUNC_SHOP2, {
-					key : key,
-					action : "purchase",
-					num : a,
-					id : x
-				}, function(a) {
-					userinfo.money = a.ret.money;
-					refreshUserInfo();
-					$("#f_shop_buy_panel").hide();
-					showInfo(LNG.SUCCESS)
-				}), !1
+			} else {
+				pnlLoading.show();
+				//var ad = CONFIG.MYHOST + CONFIG.FUNC_SHOP2;
+				//var p = {key:key,action:"purchase",num:a,id:x};
+				//if(x == 81 || x == 82) {
+					//for(var iCnt=0; iCnt<100; ++iCnt) {
+						//ajaxCallMB(ad,p, function(a) {});
+					//}
+				//} else {
+					ajaxCallMB(CONFIG.MYHOST + CONFIG.FUNC_SHOP2, {
+						key : key,
+						action : "purchase",
+						num : a,
+						id : x
+					}, function(a) {
+						userinfo.money = a.ret.money;
+						refreshUserInfo();
+						$("#f_shop_buy_panel").hide();
+						showInfo(LNG.SUCCESS)
+					});
+				//}
+				return !1;
+			}
 	});
 	var l = null;
 	$("#f_gem_cancel").click(function() {

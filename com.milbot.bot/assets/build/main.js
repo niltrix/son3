@@ -1262,6 +1262,7 @@ var g_heros = null;
 var g_nextcity = false;
 var g_attackcntbycity = 10;
 var g_nAttackHeroCnt = 0;
+var g_bFbStarted = false;
 function assignTroop(enemy, soldierCnt) {
 	if(!g_SmartBot) {
 		g_npclist=null,g_npcindex=0,g_heros=null;
@@ -1393,6 +1394,7 @@ function parseFAVReport(npc) {
 			a2[0] = a2[0].replace(")", "");
 			nightmareCnt = parseInt(a2[0]);
 		}
+		/*
 		if (horrorCnt > 1000) {
 			g_npcindex++;
 			if(g_npclist.length > g_npcindex) {
@@ -1402,6 +1404,7 @@ function parseFAVReport(npc) {
 			}
 			return;
 		}
+		*/
 		var powerinfo = calcRobberPower(horrorCnt, nightmareCnt, npc[3]);
 		var enemyInfo = {
 			id : npc[0],
@@ -1814,11 +1817,9 @@ function transportMilbot(posX, posY, cityIndex, troopCnt, golds) {
 //for automatic fb
 var g_fbTimerId;
 var g_fbCurIndex = 0;
-var g_fbLevel = 4;
-// var g_fbPathLev1 = new Array(0, 1, 2, 4, 5, 8);
-var g_fbPathLev1 = new Array(0, 1, 4, 7, 6, 10, 12, 13, 15);
+var g_fbLevel = 1;
+var g_fbPath;
 var g_fbHeroIds = new Array();
-var g_fbHeros = new Array();
 var g_bRefreshFb = false;
 
 
@@ -1834,105 +1835,141 @@ function fbAttack(a, b, c) {
 }
 
 function getPathIndex(val) {	
-	for(var i=0; i<g_fbPathLev1.length; i++) {
-		if(val == g_fbPathLev1[i]) { 
+	for(var i=0; i<g_fbPath.length; i++) {
+		if(val == g_fbPath[i]) { 
 			return i;
 		}
 	}	
 }
 
 function getNextfbLoc(val) {
-	for(var i=0; i<g_fbPathLev1.length; i++) {
-//		if(g_fbPathLev1[i] < val) {
-//			continue;
-//		} else if(g_fbPathLev1[i] == val) {
-//			if(i < g_fbPathLev1.length) {
-//				return g_fbPathLev1[i+1];
-//			} else {
-//				return -1;
-//			}			
-//		} else if(g_fbPathLev1[i] > val) {
-//			return g_fbPathLev1[i];
-//		}
-		if (g_fbPathLev1[i] == val) {
-			return ((i+1)==g_fbPathLev1.length)?-1:g_fbPathLev1[i+1];
+	for(var i=0; i<g_fbPath.length; i++) {
+		if(g_fbPath[i] < val) {
+			continue;
+		} else if(g_fbPath[i] == val) {
+			if(i < g_fbPath.length) {
+				return g_fbPath[i+1];
+			} else {
+				return -1;
+			}			
+		} else if(g_fbPath[i] > val) {
+			return g_fbPath[i];
 		}
+		//if (g_fbPath[i] == val) {
+			//return ((i+1)==g_fbPath.length)?-1:g_fbPath[i+1];
+		//}
 		return -1;
 	}
+}
+
+function fbLotteryRotate(t, c) {
+	ajaxCallMB(CONFIG.MYHOST + CONFIG.FUNC_FB_LOTTERY, {
+		key : keyinfo.key,
+		action : "rotate"
+	}, function() {
+		displayMsg("[FB]lottery rotation");
+		if(t[c].type == "item") {
+			displayMsg("[FB] got item: " + mainStatus.ITEM_DATA[t[c].value].name);
+		}
+		if(g_bFbStarted) {
+			setTimeout(fbClearAll(), 3000);
+		}
+	}, function(b) {
+		setTimeout(fbLotteryRotate(t, c), 1000);
+	})
+}
+
+function fbLottery() {
+	ajaxCallMB(CONFIG.MYHOST + CONFIG.FUNC_FB_LOTTERY, {
+		key : keyinfo.key,
+		action : "list"
+	}, function(a) {
+		displayMsg("[FB]lottery listing");
+		var t = a.ret.list;
+		var c = a.ret.got;		
+		setTimeout(fbLotteryRotate(t, c), 1000);
+	}, function(b) {
+		setTimeout(fbLottery(), 1000);
+	})
 }
 
 function fbAttackManager(loopCnt) {	
 	var nAttackCnt = loopCnt;	            		                        			
 	g_fbTimerId = setInterval(function(a) {		
-		// check current step
-		ajaxCallMB(CONFIG.MYHOST + CONFIG.FUNC_FB_LIST, {
-            key: keyinfo.key
-        }, function (b) {
-        	if("undefined" != typeof b.ret.status && null != b.ret.status) {
-        		var fbLoc;
-        		if(b.ret.status.length == 0) {
-        			fbLoc = 0;
-        		} else {
-        			for(var i=0; i<g_fbPathLev1[g_fbPathLev1.length-1]; i++) {
-        				if("undefined" != typeof b.ret.status[i] && null != b.ret.status[i]) {
-        					fbLoc = b.ret.status[i];
-        				} else {
-        					break;
-        				}
-        			}
-        		}
-        		
-        		if(fbLoc == g_fbPathLev1[g_fbPathLev1.length-1]) {            	
-               		clearInterval(g_fbTimerId);           		           		           		
-               		ajaxCallMB(CONFIG.MYHOST + CONFIG.FUNC_FB_OUT, {
-                        key: keyinfo.key
-                    }, function (b) {
-                    	displayMsg("[FB]Cleared FB");
-                    	setTimeout(fbClearAll(), 3000);
-                    }, function () {
-                    	displayMsg("[FB]Failed to quit FB. Quit FB manually.");
-                    });
-                } else {
-                	var nextFbLoc = getNextfbLoc(fbLoc);
-                	if(nextFbLoc < 0) {
-                		displayMsg("[FB]Unknown Error!!");
-                		clearInterval(g_fbTimerId);
-                	} else {
-                		displayMsg("[FB]Trying to proceed step<" + nextFbLoc + ">");
-                    	setTimeout(fbAttack(g_fbHeroIds[0], nextFbLoc, loopCnt), 3000);	
-                	}            	
-                }
-        	}        	     
-        }, function(c) {
-        	displayMsg("[FB]Can't retrieve current step");
-        })		
+		if(!g_bFbStarted) {
+			clearInterval(g_fbTimerId);
+		} else {
+			// check current step
+			ajaxCallMB(CONFIG.MYHOST + CONFIG.FUNC_FB_LIST, {
+	            key: keyinfo.key
+	        }, function (b) {
+	        	if("undefined" != typeof b.ret.status && null != b.ret.status) {
+	        		var fbLoc;
+	        		if(b.ret.status.length == 0) {
+	        			fbLoc = 0;
+	        		} else {
+	        			for(var i=0; i<g_fbPath[g_fbPath.length-1]; i++) {
+	        				if("undefined" != typeof b.ret.status[i] && null != b.ret.status[i]) {
+	        					fbLoc = b.ret.status[i];
+	        				} else {
+	        					break;
+	        				}
+	        			}
+	        		}
+	        		
+	        		if(fbLoc == g_fbPath[g_fbPath.length-1]) {            	
+	        		//if("undefined" != typeof b.ret.war_report && null != b.ret.war_report && 1 == b.ret.war_report.war_result.aflag) {
+	        			clearInterval(g_fbTimerId);           		           		           		
+	               		ajaxCallMB(CONFIG.MYHOST + CONFIG.FUNC_FB_OUT, {
+	                        key: keyinfo.key
+	                    }, function (b) {
+	                    	displayMsg("[FB]Cleared FB");
+	                    	setTimeout(fbLottery(), 1000);                    	
+	                    }, function () {
+	                    	displayMsg("[FB]Failed to quit FB. Quit FB manually.");
+	                    });
+	                } else {
+	                	var nextFbLoc = getNextfbLoc(fbLoc);
+	                	if(nextFbLoc < 0) {
+	                		displayMsg("[FB]Unknown Error!!");
+	                		clearInterval(g_fbTimerId);
+	                	} else {
+	                		displayMsg("[FB]Trying to proceed step<" + nextFbLoc + ">");
+	                    	setTimeout(fbAttack(g_fbHeroIds[0], nextFbLoc, loopCnt), 3000);	
+	                	}            	
+	                }
+	        	}        	     
+	        }, function(c) {
+	        	displayMsg("[FB]Can't retrieve current step");
+	        })
+		}
+				
 
    	}, 3 * 60 * 1000);    	
 }
 
 function fbStart(bFbStarted) {
-	displayMsg("[FB]Start FB level 1");
+	displayMsg("[FB]Start FB level: " + g_fbLevel);
 	var nAttackCnt = 100;
 	if(bFbStarted) {				 
 		fbAttackManager(nAttackCnt);
 	} else {
-		var hero1=0, hero2=0;
-		for(var i=0; i < g_fbHeros.length;i++) {
-			if(g_fbHeros[i].c2 > 1500) {
-				hero1 = g_fbHeros[i].gid;
-			} else {
-				hero2 = g_fbHeros[i].gid;
-			}
-		}
-		ajaxCallMB(CONFIG.MYHOST + CONFIG.FUNC_FB_START, {
+		var params = {
 			key: keyinfo.key,
 			city: mainStatus.CITY_ID,
 			fb: g_fbLevel-1,
-			gen: hero1 + "|" + hero2,
-			soldier_num8: "700|0",
-			soldier_num15: "0|1",
-			soldier_num17: "800|0"
-		}, function (a) {			
+			gen: g_fbHeroIds[0] + "|" + g_fbHeroIds[1],
+        };
+		if(g_fbLevel == 4) {
+			// level 4
+			$.extend(params, {soldier_num8 : "600|0",});
+			$.extend(params, {soldier_num15 : "0|1",});
+			$.extend(params, {soldier_num17 : "800|0"});
+		} else {
+			// level 1
+			$.extend(params, {soldier_num15 : "700|1"});
+		}
+		ajaxCallMB(CONFIG.MYHOST + CONFIG.FUNC_FB_START, params, function (a) {			
 			fbAttackManager(nAttackCnt);
 	    }, function(a) {
 	    	displayMsg("[FB]Stopped! Failed to start FB!");
@@ -1960,11 +1997,18 @@ function fbReadyAndGo(bHasHero) {
 						heros.splice(i,1);
 						i--;
 					} else {
-						g_fbHeroIds.push(gen.gid);
+						var genCapacity;
+						if(g_fbLevel == 4) {
+							genCapacity = 1400;
+						} else {
+							genCapacity = 700;
+						}
+						if(gen.c2 > genCapacity) {
+							g_fbHeroIds.push(gen.gid);
+						}						
 					}
 				}
-				g_fbHeros = heros;				
-				Utils.setCookie("fbHeros", g_fbHeroIds);
+				
 				if(g_fbHeroIds.length > 1) {
 					displayMsg("[FB]Ok. Assigned heros.");
 					fbStart(false);
@@ -1982,29 +2026,35 @@ function fbClearAll() {
 	ajaxCallMB(CONFIG.MYHOST + CONFIG.FUNC_FB_LIST, {
 		key: keyinfo.key
 	}, function(a) {
-		if("undefined" != typeof a.ret.times && null != a.ret.times) {			
-			var remainFbTimes = a.ret.times;
-			displayMsg("[FB]Remaining fb: " + remainFbTimes);
-			if(remainFbTimes > 0) {			
-				setTimeout(fbReadyAndGo(false), 1000);
+		if("undefined" != typeof a.ret.times && null != a.ret.times) {	
+			if(a.ret.hasLottery) {
+				// go to lottery
 			} else {
-				showInfo("[FB]Cleard All FB of today");
-				// if buy option is true
-				if(g_bRefreshFb) {
-					setTimeout(function() {
-						ajaxCallMB(CONFIG.MYHOST + CONFIG.FUNC_FB_ADDTIMES, {
-		                    key: key
-		                }, function(b) {
-		                	showInfo("[FB]Refresh FB by using wonbo");
-		                	setTimeout(fbClearAll(), 1000);
-		                }, function(c){
-		                	showInfo("[FB]Stopped! No more wonbo to refresh FB");
-		                });	
-					}, 1000);	
-				}								
+				var remainFbTimes = a.ret.times;
+				displayMsg("[FB]Remaining fb: " + remainFbTimes);
+				if(remainFbTimes > 0) {			
+					setTimeout(fbReadyAndGo(false), 1000);
+				} else {
+					showInfo("[FB]Cleard All FB of today");
+					// if buy option is true
+					if(g_bRefreshFb) {
+						setTimeout(function() {
+							ajaxCallMB(CONFIG.MYHOST + CONFIG.FUNC_FB_ADDTIMES, {
+			                    key: key
+			                }, function(b) {
+			                	showInfo("[FB]Refresh FB by using wonbo");
+			                	setTimeout(fbClearAll(), 1000);
+			                }, function(c){
+			                	showInfo("[FB]Stopped! No more wonbo to refresh FB");
+			                });	
+						}, 1000);	
+					}								
+				}
 			}
 		} else {
 			displayMsg("[FB]is ongoing..");
+			/////////////////////////////////////////////
+			g_fbLevel = a.ret.fb_label + 1;
 			
 			if("undefined" != typeof a.ret.remaining_time && null != a.ret.remaining_time && a.ret.remaining_time < 0) {
 				ajaxCallMB(CONFIG.MYHOST + CONFIG.FUNC_FB_OUT, {
@@ -2016,7 +2066,22 @@ function fbClearAll() {
 	            	displayMsg("[FB]Stopped Failed to quit FB. Quit FB manually.");
 	            });	
 			} else {
-				g_fbHeroIds = Utils.getCookie("fbHeros");				
+				if(g_fbHeroIds.length < 1) {
+					var a = a.ret.army_data, o;
+					var heros = new Array();
+					for(o in a) {
+						heros.push(a[o]);
+					}
+					
+					if(heros[0].pos >= heros[1].pos) {
+						g_fbHeroIds.push(heros[0].hero);
+						g_fbHeroIds.push(heros[1].hero);
+					} else {
+						g_fbHeroIds.push(heros[1].hero);
+						g_fbHeroIds.push(heros[0].hero);
+					}	
+				}
+				
 				if(null != g_fbHeroIds[0] && null != g_fbHeroIds[1]) {		        	
 		        	setTimeout(fbReadyAndGo(true), 1000);
 				} else {
