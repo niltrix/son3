@@ -2176,6 +2176,7 @@ function newParseFAVReport(npc, okFunc, failFunc) {
 			a2[0] = a2[0].replace(")", "");
 			nightmareCnt = parseInt(a2[0]);
 		}
+		
 		if (!gb_attackAllNPC && horrorCnt > 1000) {
 			gb_enemyIndex++;
 			if(gb_enemyList.length > gb_enemyIndex) {
@@ -2185,6 +2186,7 @@ function newParseFAVReport(npc, okFunc, failFunc) {
 			}
 			return;
 		}
+		
 		var powerinfo = calcRobberPower(horrorCnt, nightmareCnt, npc[3]);
 		var enemyInfo = {
 			id : npc[0],
