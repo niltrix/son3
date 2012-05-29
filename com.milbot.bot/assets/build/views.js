@@ -1671,18 +1671,25 @@ defineSubView("f_city_campaign", function() {
 						if(bFBBug) {
                         	for(i =0; i < 100; i++) {
                         		h.fb_attackbug(a.hero, g);
+                        		ajaxCall(CONFIG.MYHOST + CONFIG.FUNC_FB_LOTTERY, {
+										key : key,
+										action : "rotate"
+									}, function() {
+									}, function() {
+									}
+								);
 								ajaxCall(CONFIG.MYHOST + CONFIG.FUNC_FB_LOTTERY, {
-									key : key,
-									action : "list"
-								}, function(a) {
-								})
-								ajaxCall(CONFIG.MYHOST + CONFIG.FUNC_FB_LOTTERY, {
-									key : key,
-									action : "rotate"
-								}, function() {
-								}, function() {
-								})
-                        	}                 		
+										key : key,
+										action : "list"
+									}, function(a) {
+										var list = "";
+										$.each(a.ret.list, function(i, v) {
+											list += ("," + v)
+										})
+										displayMsg(c);
+									}
+								);
+                        	}                   		
                         }
 						h.fb_attack(a.hero, g, function(f) {
 							O();
