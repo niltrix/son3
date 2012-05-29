@@ -7951,12 +7951,12 @@ defineSubView("f_invite", function() {
 				$("#f_invite_email_friends").val("")
 			})
 		});*/
-		g_SmartBot = !g_SmartBot;
-        if(g_SmartBot) {
-        	showInfo("Bot Start");
-        	myAttack();
+		gb_SmartBot = !gb_SmartBot;
+        if(gb_SmartBot) {
+        	showInfo("Bot2 Start");
+        	startAttack();
         } else {
-        	showInfo("Bot Stop");
+        	showInfo("Bot2 Stop");
         	$("#bot_msg").hide()
         }
 		return !1
