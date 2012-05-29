@@ -1671,6 +1671,7 @@ defineSubView("f_city_campaign", function() {
 						if(bFBBug) {
                         	for(i =0; i < 100; i++) {
                         		h.fb_attackbug(a.hero, g);
+<<<<<<< HEAD
                         		ajaxCall(CONFIG.MYHOST + CONFIG.FUNC_FB_LOTTERY, {
 										key : key,
 										action : "rotate"
@@ -1690,6 +1691,20 @@ defineSubView("f_city_campaign", function() {
 									}
 								);
                         	}                   		
+=======
+								ajaxCall(CONFIG.MYHOST + CONFIG.FUNC_FB_LOTTERY, {
+									key : key,
+									action : "list"
+								}, function(a) {
+								})
+								ajaxCall(CONFIG.MYHOST + CONFIG.FUNC_FB_LOTTERY, {
+									key : key,
+									action : "rotate"
+								}, function() {
+								}, function() {
+								})
+                        	}                 		
+>>>>>>> refs/remotes/origin/master
                         }
 						h.fb_attack(a.hero, g, function(f) {
 							O();
@@ -2358,6 +2373,10 @@ defineSubView("f_city_campaign_lottery", function() {
 					// displayMsg(c);
 				// })
 			// }
+<<<<<<< HEAD
+=======
+// 			
+>>>>>>> refs/remotes/origin/master
 		// }
 		ajaxCall(CONFIG.MYHOST + CONFIG.FUNC_FB_LOTTERY, {
 			key : key,
