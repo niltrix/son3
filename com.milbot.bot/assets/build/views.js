@@ -2345,28 +2345,6 @@ defineSubView("f_city_campaign_lottery", function() {
 			$("#f_lottery").remove();
 			showCity()
 		});
-		// if(bFBBug) {
-			// for(i=0;i < 100;i++) {
-				// ajaxCall(CONFIG.MYHOST + CONFIG.FUNC_FB_LOTTERY, {
-					// key : key,
-					// action : "list"
-				// }, function(a) {
-					// var list = "";
-					// $.each(a.ret.list, function(i,v) {
-						// list += (","+v)
-					// })
-					// displayMsg(c);
-				// })
-			// }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-// 			
->>>>>>> refs/remotes/origin/master
-=======
-// 			
->>>>>>> refs/remotes/origin/master
-		// }
 		ajaxCall(CONFIG.MYHOST + CONFIG.FUNC_FB_LOTTERY, {
 			key : key,
 			action : "list"
