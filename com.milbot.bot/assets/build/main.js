@@ -1043,9 +1043,9 @@ var staticBuff = {
 	ALLY_ARMYDEF : 5,
 	TECH_WM : 20,
 	TECH_DM : 20,
-	TECH_SOD : 19,
-	TECH_SOA : 19,
-	TECH_CS : 18,
+	TECH_SOD : 20,
+	TECH_SOA : 20,
+	TECH_CS : 19,
 	TECH_DS : 19,
 	_END : ""
 }
@@ -2317,9 +2317,17 @@ function excuteAttack(hero, x, y, troop, cityid) {
 		}
 	}, function(type, a) {
 		if(type && type == "attack") {
-			a && a.code && displayMsg(type+"/"+LNG.ERROR.SERVER[a.code]);
+			if(typeof(LNG.ERROR.SERVER[a.code]) != "undefined") {
+				displayMsg(type+"/"+LNG.ERROR.SERVER[a.code]);
+			} else {
+				displayMsg(type+"/"+"undefined error");
+			}
 		} else if(type == "confirm") {
-			a && a.code && displayMsg(type+"/"+LNG.ERROR.SERVER[a.code]);
+			if(typeof(LNG.ERROR.SERVER[a.code]) != "undefined") {
+				displayMsg(type+"/"+LNG.ERROR.SERVER[a.code]);
+			} else {
+				displayMsg(type+"/"+"undefined error");
+			}
 		}
 		
 		if (a.code == 2537) {
