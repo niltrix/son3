@@ -2411,27 +2411,27 @@ defineSubView("f_city_center", function() {
 		$("#f_content3_head_amount").text(mainStatus.CITY_INFO[11] - mainStatus.CITY_INFO[10]);
 		$("#f_content3_head_max").text(mainStatus.CITY_INFO[11]);
 		$("#f_content3_house_level").text(mainStatus.CITY_INFO[16]);
-		2 > mainStatus.CITY_INFO[16] && $("#f_city_house_down").hide();
+		// 2 > mainStatus.CITY_INFO[16] && $("#f_city_house_down").hide();
 		$("#f_content3_storage_level").text(mainStatus.CITY_INFO[20]);
-		2 > mainStatus.CITY_INFO[20] && $("#f_city_storage_down").hide();
+		// 2 > mainStatus.CITY_INFO[20] && $("#f_city_storage_down").hide();
 		$("#f_content3_office_level").text(mainStatus.CITY_INFO[22]);
-		2 > mainStatus.CITY_INFO[22] && $("#f_city_office_down").hide();
+		// 2 > mainStatus.CITY_INFO[22] && $("#f_city_office_down").hide();
 		$("#f_content3_wood_level").text(mainStatus.CITY_INFO[12]);
-		2 > mainStatus.CITY_INFO[12] && $("#f_city_wood_down").hide();
+		// 2 > mainStatus.CITY_INFO[12] && $("#f_city_wood_down").hide();
 		$("#f_content3_food_level").text(mainStatus.CITY_INFO[15]);
-		2 > mainStatus.CITY_INFO[15] && $("#f_city_food_down").hide();
+		// 2 > mainStatus.CITY_INFO[15] && $("#f_city_food_down").hide();
 		$("#f_content3_iron_level").text(mainStatus.CITY_INFO[13]);
-		2 > mainStatus.CITY_INFO[13] && $("#f_city_iron_down").hide();
+		// 2 > mainStatus.CITY_INFO[13] && $("#f_city_iron_down").hide();
 		$("#f_content3_gold_level").text(mainStatus.CITY_INFO[14]);
-		2 > mainStatus.CITY_INFO[14] && $("#f_city_gold_down").hide();
+		// 2 > mainStatus.CITY_INFO[14] && $("#f_city_gold_down").hide();
 		$("#f_content3_research_level").text(mainStatus.CITY_INFO[18]);
-		2 > mainStatus.CITY_INFO[18] && $("#f_city_research_down").hide();
+		// 2 > mainStatus.CITY_INFO[18] && $("#f_city_research_down").hide();
 		$("#f_content3_military_level").text(mainStatus.CITY_INFO[17]);
-		2 > mainStatus.CITY_INFO[17] && $("#f_city_military_down").hide();
+		// 2 > mainStatus.CITY_INFO[17] && $("#f_city_military_down").hide();
 		$("#f_content3_hero_level").text(mainStatus.CITY_INFO[19]);
-		2 > mainStatus.CITY_INFO[19] && $("#f_city_hero_down").hide();
+		// 2 > mainStatus.CITY_INFO[19] && $("#f_city_hero_down").hide();
 		$("#f_content3_defense_level").text(mainStatus.CITY_INFO[21]);
-		2 > mainStatus.CITY_INFO[21] && $("#f_city_defense_down").hide()
+		// 2 > mainStatus.CITY_INFO[21] && $("#f_city_defense_down").hide()
 	}
 
 	function q() {
