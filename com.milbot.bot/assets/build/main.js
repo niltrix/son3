@@ -2295,7 +2295,7 @@ function newAssignTroop(enemy, cityIndex, okfunc, failfunc) {
 					}
 					}
 				}	
-			}, 5000);
+			}, Math.floor(Math.random() * 5000)+10000);
 		} else {
 			gb_nCityIndex++;
 			if(gb_nCityIndex == userinfo.city.length) { gb_nCityIndex = 0; }
