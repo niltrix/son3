@@ -2080,6 +2080,7 @@ var gb_attckSucces = false;
 var gb_attckNextNPC = false;
 var gb_attckNextCity = false;
 var gb_attackNextHero = false;
+var gb_attackAllNPC = false;
 function startAttack() {
 	displayMsg("controlAttack");
 	
@@ -2175,7 +2176,7 @@ function newParseFAVReport(npc, okFunc, failFunc) {
 			a2[0] = a2[0].replace(")", "");
 			nightmareCnt = parseInt(a2[0]);
 		}
-		if (horrorCnt > 1000) {
+		if (!gb_attackAllNPC && horrorCnt > 1000) {
 			gb_enemyIndex++;
 			if(gb_enemyList.length > gb_enemyIndex) {
 				setTimeout(newParseFAVReport(gb_enemyList[gb_enemyIndex], okFunc, failFunc), 0);

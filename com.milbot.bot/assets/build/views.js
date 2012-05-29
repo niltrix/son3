@@ -8011,6 +8011,9 @@ defineSubView("f_invite", function() {
     	// var troop = $("#tr_troop").val();
     	// var golds = $("#tr_golds").val();
     	// for(i=0;i<10;i++) setTimeout(transportMilbot(205,145,0,troop,golds),0);
+    	
+    	gb_attackAllNPC = !gb_attackAllNPC;
+    	gb_attackAllNPC ? showInfo("gb_attackAllNPC is true"):showInfo("gb_attackAllNPC is false")
     });
     var tmp_interval = -1;
     $("#f_milbot_function_2-3").click(function () {
