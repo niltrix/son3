@@ -2283,13 +2283,13 @@ function newAssignTroop(enemy, cityIndex, okfunc, failfunc) {
 		action : "gen_list",
 		extra : 1
 	}, function(i) {
-		heros = i.ret.hero;
+		var heros = i.ret.hero;
 		if("undefined" != typeof heros && null != heros && 0 != heros.length) {
 			for(var i = 0; i < heros.length; i++) {
 				var g = heros[i];
 				var d = mainStatus.HERO_DATA[g.gid];
 				if(d.rank == "a") {
-					g_heros.splice(i,1);
+					heros.splice(i,1);
 					i--;
 				}
 			}
