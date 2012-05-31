@@ -1695,6 +1695,7 @@ defineSubView("f_city_campaign", function() {
 							O();
 							var c = m(g);
 							b.show(c, f, function() {
+								displayMsg("fb pos: " + g);
 								if(1 == f.ret.war_report.war_result.aflag)
 									c.isend ? showInfo(LNG.F_CITY_CAMPAIGN_HTML.FB_THEEND, function() {
 										$("#closemask").show();
