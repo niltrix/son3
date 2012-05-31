@@ -3784,7 +3784,7 @@ defineSubView("f_city_hero", function() {
 					pnlLoading.show();
 					ajaxCall(CONFIG.MYHOST + CONFIG.FUNC_HERO_RECRUIT, {
 						key : key,
-						lv : c.g
+						lv : c.g+1
 					}, function(a) {
 						if(null == a.ret.hero || 0 == a.ret.hero.length)
 							showInfo(LNG.ERROR.CLIENT.NOMATCHARENA);
@@ -4432,7 +4432,7 @@ defineSubView("f_city_hero", function() {
 		x = 0;
 		ajaxCall(CONFIG.MYHOST + CONFIG.FUNC_HERO_RECRUIT, {
 			key : key,
-			lv : a.g
+			lv : a.g+1
 		}, function(c) {
 			if(null == c.ret.hero || 0 == c.ret.hero.length)
 				showInfo(LNG.ERROR.CLIENT.NOMATCHARENA);
