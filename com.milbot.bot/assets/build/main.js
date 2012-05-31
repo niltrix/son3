@@ -1950,7 +1950,7 @@ function fbAttackManager(loopCnt) {
 
 function fbStart(bFbStarted) {
 	displayMsg("[FB]Start FB level: " + g_fbLevel);
-	var nAttackCnt = 100;
+	var nAttackCnt = 1;
 	if(bFbStarted) {				 
 		fbAttackManager(nAttackCnt);
 	} else {
